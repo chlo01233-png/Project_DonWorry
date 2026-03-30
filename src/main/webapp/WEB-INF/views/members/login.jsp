@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Login</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
@@ -215,7 +215,7 @@
 
         <div class="login-footer">
             <a href="#">회원가입</a> |
-            <a href="#">아이디 찾기</a> |
+            <a href="/members/toIdSearch">아이디 찾기</a> |
             <a href="#">비밀번호 찾기</a>
         </div>
 
