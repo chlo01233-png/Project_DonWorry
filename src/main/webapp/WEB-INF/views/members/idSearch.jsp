@@ -316,13 +316,19 @@
 </body>
 <script>
 	$(".find-btn").on("click",function(){
+		
 		$.ajax({
 			url : "/members/idSearch",
 			data : {name : $(".name").val(),
-				  email : $(".email").val()},
-		    dataType:"json"	  
+				  email : $(".email").val()}
+		   	  
 		}).done(function(resp){	
-			$(".span").html("가입된 아이디 : " + resp)
+			if(resp){
+				$(".span").html("가입된 아이디 : " + resp);
+			}else{	
+				$(".span").html("가입된 아이디가 없습니다.")
+			}
+			
 		})
 	})
 

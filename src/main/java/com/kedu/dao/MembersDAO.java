@@ -25,6 +25,17 @@ public class MembersDAO {
 		String sql = "select nickname from members where id = ?";
 		return jdbc.queryForObject(sql,String.class,id);
 	}
+	public String idSearch(String name,String email) {
+		String test = "select count(*) from members where name = ? and email = ?";
+		int result = jdbc.queryForObject(test,Integer.class,name,email);
+		if(result > 0) {
+			String sql = "select substr(id, 1, length(id) - 4) || '****' from members where name = ? and email =?";
+			return jdbc.queryForObject(sql,String.class,name,email);
+		}else {
+			return null;
+		}
+				
+	}
 
 	public void signup(MembersDTO dto) {
 	    // 1. 괄호 안에 데이터를 넣을 컬럼 이름을 정확히 적어줘.
@@ -42,6 +53,23 @@ public class MembersDAO {
 	        dto.getRrn(), 
 	        dto.getBusiness_number()
 	    );
+	}
+	
+	public int checkMemberForPw(String id, String email) {
+		String sql = "select count(*) from members where id=? and email=?";
+		
+		return jdbc.queryForObject(sql,Integer.class,id,email);
+	}
+	
+	public int updatePw(String id, String pw) {
+	    String sql = "update members set pw = ? where id = ?";
+	    
+	    try {
+	        return jdbc.update(sql, pw, id);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return 0;
+	    }
 	}
 
 }

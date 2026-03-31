@@ -201,7 +201,7 @@
 
         <div class="login-title">로그인</div>
 
-        <form action ="members/login" method ="post">
+        <form action ="/members/login" method ="post">
             <div class="input-group">
                 <input type="text" placeholder="아이디" name="id">
             </div>
@@ -216,7 +216,7 @@
         <div class="login-footer">
             <a href="/members/toSignUp">회원가입</a> |
             <a href="/members/toIdSearch">아이디 찾기</a> |
-            <a href="#">비밀번호 찾기</a>
+            <a href="/members/toPwSearch">비밀번호 찾기</a>
         </div>
 
     </div>
