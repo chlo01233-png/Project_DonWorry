@@ -16,26 +16,26 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/files")
 public class FilesController {
 
-	@PostMapping("/upload")
-	@ResponseBody
-	public Map<String, String> upload(@RequestParam("image") MultipartFile file) throws Exception {
-		System.out.println("도착");
-	    String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-
-	    String path = "C:/upload/";
-	    
-	    File savePathFile = new File(path);
-	    if(!savePathFile.exists()){
-	        savePathFile.mkdirs(); 
-	    }
-	    
-	    File dest = new File(path + fileName);
-	    file.transferTo(dest);
-
-	    Map<String, String> map = new HashMap<>();
-	    map.put("url", "/upload/" + fileName); // ⭐ 이 URL이 핵심
-
-	    return map;
-	}
+//	@PostMapping("/upload")
+//	@ResponseBody
+//	public Map<String, String> upload(@RequestParam("image") MultipartFile file) throws Exception {
+//		System.out.println("도착");
+//	    String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+//
+//	    String path = "C:/upload/";
+//	    
+//	    File savePathFile = new File(path);
+//	    if(!savePathFile.exists()){
+//	        savePathFile.mkdirs(); 
+//	    }
+//	    
+//	    File dest = new File(path + fileName);
+//	    file.transferTo(dest);
+//
+//	    Map<String, String> map = new HashMap<>();
+//	    map.put("url", "/upload/" + fileName); // ⭐ 이 URL이 핵심
+//
+//	    return map;
+//	}
 	
 }
