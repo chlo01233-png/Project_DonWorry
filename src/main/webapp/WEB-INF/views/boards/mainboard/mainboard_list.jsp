@@ -511,8 +511,8 @@
     </button>
 </div>
 <script>
-$(".floating-write-btn").on("click",funtion(){
-	location.href = "/boards/toWrite";
+$(".floating-write-btn").on("click",function(){
+	location.href  = "/boards/toWrite";
 })
 
 </script>
