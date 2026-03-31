@@ -215,7 +215,9 @@ body {
 		<h2></h2>
 		<p>쉽고 정확한 알바 관리, 지금 가입하세요.</p>
 
-		<form action="/members/signup">
+
+		<form action="/members/signup" method="post">
+
 			<div class="form-group">
 				<label>가입 유형</label>
 				<div class="type-selector">
@@ -350,7 +352,7 @@ body {
 	        } else {
 	            // --- 개인 회원 선택 시 ---
 	            $('#businessNumberGroup').hide(); // 사업자번호 숨기기
-	            $('#business_number').val('');
+	            $('#business_number').val("");
 	            $('#business_number').attr('required', false);
 	            
 	            $('#rrnGroup').show();           // 생년월일 보이기

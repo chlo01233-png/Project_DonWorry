@@ -20,6 +20,11 @@ public class BoardsController {
 		return "boards/mainboard/mainboard_list";
 	}
 	
+	@RequestMapping("/jobpost")
+	public String jobpost() {
+		return "boards/jobpost";
+	}
+	
 	@RequestMapping("/toWrite")
 	public String toWrite() {
 		return "boards/write";
