@@ -215,7 +215,7 @@ body {
 		<h2></h2>
 		<p>쉽고 정확한 알바 관리, 지금 가입하세요.</p>
 
-		<form action="members/signup">
+		<form action="/members/signup">
 			<div class="form-group">
 				<label>가입 유형</label>
 				<div class="type-selector">

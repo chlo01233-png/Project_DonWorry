@@ -255,7 +255,7 @@
                     <i class="fa-solid fa-briefcase fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
                     구인구직
                 </a>
-                <a href="#"> 
+                <a href="/boards//mainboard_list"> 
                     <i class="fa-regular fa-message fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i> 
                     커뮤니티
                 </a>               
@@ -273,7 +273,7 @@
 
         <div class="write-title">게시글 작성</div>
 
-        <form action="/board/write" method="post" onsubmit="return submitContents();">
+        <form action="/boards/write" method="post" id = "frm">
         
         	
     		<!-- 카테고리 -->
@@ -321,14 +321,17 @@
     </div>
 </div>
 <script>
-const editor = new toastui.Editor({
-    el: document.querySelector('#editor'),
-    height: '400px',
-    initialEditType: 'wysiwyg', // markdown / wysiwyg
-    previewStyle: 'vertical',
-    hideModeSwitch: true,
-    language: 'ko-KR'
-});
+	const editor = new toastui.Editor({
+    	el: document.querySelector('#editor'),
+    	height: '400px',
+    	initialEditType: 'wysiwyg', // markdown / wysiwyg
+    	previewStyle: 'vertical',
+    	hideModeSwitch: true,
+    	language: 'ko-KR'
+	});
+	$("#frm").on("submit",function(){
+		$("#content").val(editor.getHTML());
+	})
 </script>
 </body>
 </html>
