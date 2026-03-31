@@ -155,21 +155,21 @@ body {
 }
 
 .input-row {
-    display: flex;
-    gap: 15px;      /* 이름과 닉네임 사이 간격 */
-    width: 100%;    /* 전체 너비 사용 */
+	display: flex;
+	gap: 15px; /* 이름과 닉네임 사이 간격 */
+	width: 100%; /* 전체 너비 사용 */
 }
 
-.input-row > div {
-    flex: 1;        /* 1:1 비율로 나눔 */
-    min-width: 0;   /* ⭐ 매우 중요: 자식 요소가 부모보다 커지는 걸 방지 */
-    display: flex;
-    flex-direction: column;
+.input-row>div {
+	flex: 1; /* 1:1 비율로 나눔 */
+	min-width: 0; /* ⭐ 매우 중요: 자식 요소가 부모보다 커지는 걸 방지 */
+	display: flex;
+	flex-direction: column;
 }
 
 .input-row input {
-    width: 100% !important; /* 부모 div 너비에 무조건 맞춤 */
-    box-sizing: border-box;  /* 패딩 때문에 늘어나는 것 방지 */
+	width: 100% !important; /* 부모 div 너비에 무조건 맞춤 */
+	box-sizing: border-box; /* 패딩 때문에 늘어나는 것 방지 */
 }
 
 .input-row button {
@@ -235,8 +235,7 @@ body {
 
 			<div class="form-group">
 				<label for="memberPw">비밀번호</label> <input type="password"
-					id="memberPw" name="pw" placeholder="영문, 숫자 포함 8자 이상"
-					required>
+					id="memberPw" name="pw" placeholder="영문, 숫자 포함 8자 이상" required>
 			</div>
 
 			<div class="form-group">
@@ -244,18 +243,17 @@ body {
 					id="memberRePw" name="memberRePw" placeholder="영문, 숫자 포함 8자 이상"
 					required>
 			</div>
-			
+
 			<div class="form-group">
-				<label for="phone">전화번호</label> <input type="text"
-					id="phone" name="phone" placeholder="영문, 숫자 포함 8자 이상"
-					required>
+				<label for="phone">전화번호</label> <input type="text" id="phone"
+					name="phone" placeholder="영문, 숫자 포함 8자 이상" required>
 			</div>
 
 			<div class="form-group">
 				<div class="input-row">
 					<div style="flex: 1; display: flex; flex-direction: column;">
-						<label for="name">이름</label> <input type="text"
-							id="name" name="name" placeholder="실명 입력" required>
+						<label for="name">이름</label> <input type="text" id="name"
+							name="name" placeholder="실명 입력" required>
 					</div>
 
 					<div style="flex: 1; display: flex; flex-direction: column;">
@@ -265,7 +263,8 @@ body {
 				</div>
 			</div>
 
-			<div class="form-group" id="businessNumberGroup" style="display: none;">
+			<div class="form-group" id="businessNumberGroup"
+				style="display: none;">
 				<label for="business_number">사업자 번호</label> <input type="text"
 					id="business_number" name="business_number" placeholder="사업자 번호 입력">
 			</div>
@@ -335,5 +334,24 @@ body {
 			이미 계정이 있으신가요? <a href="#">로그인</a>
 		</div>
 	</div>
+
+	<script>
+$(document).ready(function() {
+    // 라디오 버튼(memberType)이 바뀔 때 실행
+    $('input[name="memberType"]').change(function() {
+        if ($(this).val() === 'BUSINESS') {
+            // 기업 회원 선택 시: 사업자 번호 보이기
+            $('#businessNumberGroup').show();
+            $('#business_number').attr('required', true); // 필수 입력으로 변경
+        } else {
+            // 개인 회원 선택 시: 사업자 번호 숨기기 + 값 초기화
+            $('#businessNumberGroup').hide();
+            $('#business_number').val(''); // 써놨던 값 지우기
+            $('#business_number').attr('required', false); // 필수 입력 해제
+        }
+    });
+});
+</script>
+
 </body>
 </html>
