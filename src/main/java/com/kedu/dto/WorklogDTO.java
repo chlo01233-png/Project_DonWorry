@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class WorklogDTO {
 	
-	private int key; // 근무 기록 번호
+	private int seq; // 근무 기록 번호
 	private int parent_seq; // 근무지 번호
 	private Timestamp work_date; //근무 날짜
 	private Timestamp start_time; //
