@@ -33,5 +33,13 @@ public class MembersController {
 		}
 		return "redirect:/";	
 	}
+	@RequestMapping("/toIdSearch")
+	public String toIdSearch() {
+		return "/members/idSearch";
+	}
+//	@RequestMapping("idSearch")
+//	public String idSearch() {
+//		
+//	}
 
 }
