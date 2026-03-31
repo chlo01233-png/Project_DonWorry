@@ -62,6 +62,7 @@ public class MembersController {
 	
 	@RequestMapping("/signup")
 	public String signup(MembersDTO dto) {
+		System.out.println("도착");
 		String pw = eu.getSha512(dto.getPw());
 		dao.signup(dto);
 		

@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="https://uicdn.toast.com/editor/latest/i18n/ko-kr.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -252,7 +255,7 @@
                     <i class="fa-solid fa-briefcase fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
                     구인구직
                 </a>
-                <a href="#"> 
+                <a href="/boards//mainboard_list"> 
                     <i class="fa-regular fa-message fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i> 
                     커뮤니티
                 </a>               
@@ -270,7 +273,7 @@
 
         <div class="write-title">게시글 작성</div>
 
-        <form action="/board/write" method="post" onsubmit="return submitContents();">
+        <form action="/boards/write" method="post" id = "frm" enctype="multipart/form-data">
         
         	
     		<!-- 카테고리 -->
@@ -302,7 +305,7 @@
 
             <!-- 버튼 영역 -->
             <div class="btn-group">
-                <button type="button" class="cancel-btn" onclick="location.href='/board/list'">취소</button>
+                <button type="button" class="cancel-btn" onclick="location.href='/boards/mainboard_list'">취소</button>
                 <button type="submit" class="submit-btn">등록</button>
             </div>
 
@@ -317,6 +320,36 @@
         <p style="margin-top: 10px; font-size: 11px;">개인정보처리방침 | 이용약관 | 고객센터</p>
     </div>
 </div>
+<script>
+	const editor = new toastui.Editor({
+    	el: document.querySelector('#editor'),
+    	height: '400px',
+    	initialEditType: 'wysiwyg', // markdown / wysiwyg
+    	previewStyle: 'vertical',
+    	hideModeSwitch: true,
+    	language: 'ko-KR',
+    	
+    		hooks: {
+    	        addImageBlobHook: async (blob, callback) => {
 
+    	            const formData = new FormData();
+    	            formData.append("image", blob);
+
+    	            const resp = await fetch("/files/upload", {
+    	                method: "POST",
+    	                body: formData
+    	            });
+
+    	            const data = await resp.json();
+
+    	            // ⭐ 이게 핵심 (에디터에 이미지 넣기)
+    	            callback(data.url, "image");
+    	        }
+    	    }
+	});
+	$("#frm").on("submit",function(){
+		$("#content").val(editor.getHTML());
+	})
+</script>
 </body>
 </html>
