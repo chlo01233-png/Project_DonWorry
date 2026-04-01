@@ -1,6 +1,9 @@
 package com.kedu.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -70,5 +73,15 @@ public class MembersDAO {
 	        return 0;
 	    }
 	}
-
+	
+	/*member 정보 list*/
+	public List<MembersDTO> selectAll(String id){
+		String sql = "select * from members where id=?";
+		return jdbc.query(sql, new BeanPropertyRowMapper<MembersDTO>(MembersDTO.class),id);
+	}
+	
+	/*member 정보 update*/
+	public void updateMember() {
+		
+	}
 }
