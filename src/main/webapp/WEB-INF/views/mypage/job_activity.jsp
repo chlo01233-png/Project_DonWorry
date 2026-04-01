@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +46,8 @@
     /* [4] 컨텐츠 영역 */
     .page {
         padding: 56px 0 72px;
-        width: 100%; 
+        width: 70%; 
+        margin:auto;
     }
 
     .page-title { font-size: 24px; font-weight: 800; color: #222; text-align: left; margin-bottom: 18px; }
@@ -155,7 +156,7 @@
                     <i class="fa-solid fa-house fa-lg" style="color: rgb(36, 99, 235);"></i>
                     홈
                 </a>
-                <a href="/salary/calendar">
+                <a href="salary/calendar">
                     <i class="fa-regular fa-calendar fa-lg" style="color:rgb(203, 203, 203); margin-right:5px;"></i>
                     급여 캘린더
                 </a>
@@ -168,7 +169,7 @@
                     커뮤니티</a>              
             </div>          
         </div>   
-        <a class="my-page" href="#">
+        <a class="my-page" href="/mypage/toMypage">
             <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
             마이페이지
         </a>    
