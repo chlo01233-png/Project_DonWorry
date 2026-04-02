@@ -1,9 +1,12 @@
 package com.kedu.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -11,10 +14,15 @@ import com.google.gson.Gson;
 import com.kedu.commons.EncryptionUtils;
 import com.kedu.dao.MypageDAO;
 
+import com.kedu.dao.MembersDAO;
+import com.kedu.dto.MembersDTO;
+
 @Controller
 @RequestMapping("/mypage")
 public class MypageController {
 	
+	@Autowired
+	private MembersDAO mdao;
 	@Autowired
 	private MypageDAO dao;
 	
@@ -29,8 +37,17 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/toProfile")
-	public String toProfile() {
+	public String toProfile(HttpSession session, Model model) {
+		String id =(String)session.getAttribute("loginId");	
+		List<MembersDTO> list = mdao.selectAll(id);		
+		model.addAttribute("list",list);
+		
 		return "mypage/profile";
+	}
+	
+	@RequestMapping("/job_activity")
+	public String to_Job_activity() {
+		return "mypage/job_activity";
 	}
 	
 	@RequestMapping("/toAccount")
