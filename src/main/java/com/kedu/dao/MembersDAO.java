@@ -89,8 +89,8 @@ public class MembersDAO {
 	
 	/*member 정보 업데이트*/
 	public int updateMember(String id,MembersDTO dto){
-		String sql = "update members set nickname=?, phone=?, email=?, type=? where id=?";
-		return jdbc.update(sql,dto.getNickname(),dto.getPhone(),dto.getEmail(),dto.getType(),id);
+		String sql = "update members set nickname=?, phone=?, email=? where id=?";
+		return jdbc.update(sql,dto.getNickname(),dto.getPhone(),dto.getEmail(),id);
 	}
 	
 }

@@ -48,7 +48,8 @@ public class MypageController {
 	@RequestMapping("/profile_update")
 	public String updateProfile(HttpSession session, MembersDTO dto) {
 		String id =(String)session.getAttribute("loginId");	
-		int up = mdao.updateMember(id,dto);
+		String type = (String)session.getAttribute("type");
+		int up = mdao.updateMember(id.trim(),dto);
 		return "redirect:/mypage/toProfile";
 	}
 	
