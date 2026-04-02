@@ -910,13 +910,9 @@ body {
 											<label>세금 적용 여부</label>
 											<div class="tax-option-group">
 												<label class="tax-option-item"> <input type="radio"
-													name="tax_type" value="0" checked> 미적용
+													name="tax_applied" value="N" checked> 미적용
 												</label> <label class="tax-option-item"> <input type="radio"
-													name="tax_type" value="3.3"> 3.3% (프리랜서)
-												</label> <label class="tax-option-item"> <input type="radio"
-													name="tax_type" value="4"> 4대보험
-												</label> <label class="tax-option-item"> <input type="radio"
-													name="tax_type" value="1"> 고용보험만
+													name="tax_applied" value="Y"> 3.3% (프리랜서 등)
 												</label> <label class="tax-option-item"> <input type="radio"
 													name="tax_type" value="custom" id="taxCustom"> 직접
 													입력
@@ -931,18 +927,30 @@ body {
 														style="font-size: 13px; color: #374151;">%</span>
 												</div>
 											</div>
-											<div class="form-row" style="margin-top: 15px;">
-												<label for="payday">급여일</label>
-												<div style="display: flex; align-items: center; gap: 8px;">
-													<select id="payday" name="payday" required
-														style="width: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-														<option value="">선택</option>
-														<c:forEach var="i" begin="1" end="31">
-															<option value="${i}">${i}일</option>
-														</c:forEach>
-													</select> <span style="font-size: 14px; color: #666;">매월 정해진
-														날짜에 급여가 계산됩니다.</span>
-												</div>
+										</div>
+										<div class="form-row full-width" style="margin-top: 5px;">
+											<label>보험 적용 여부</label>
+											<div class="tax-option-group">
+												<label class="tax-option-item"> <input type="radio"
+													name="insurance_applied" value="N" checked> 미적용
+												</label> <label class="tax-option-item"> <input type="radio"
+													name="insurance_applied" value="Y"> 4대보험 적용
+												</label> <label class="tax-option-item"> <input type="radio"
+													name="insurance_applied" value="Y"> 고용보험만 가입
+												</label>
+											</div>
+										</div>
+										<div class="form-row" style="margin-top: 5px;">
+											<label for="payday">급여일</label>
+											<div style="display: flex; align-items: center; gap: 8px;">
+												<select id="payday" name="payday" required
+													style="width: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+													<option value="">선택</option>
+													<c:forEach var="i" begin="1" end="31">
+														<option value="${i}">${i}일</option>
+													</c:forEach>
+												</select> <span style="font-size: 14px; color: #666;">매월 정해진
+													날짜에 급여가 계산됩니다.</span>
 											</div>
 										</div>
 									</div>
