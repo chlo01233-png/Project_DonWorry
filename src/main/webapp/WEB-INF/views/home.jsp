@@ -413,7 +413,7 @@
 
 <body>
 
-<div class="container">
+<div class="container">[${type}]
 <c:choose>
 <c:when test="${nickName==null}">
     <div class="top-auth">
@@ -423,13 +423,11 @@
             </a>
         </span>
         <!-- 일단 관리자 빼고 다 숨겨둠 -->
-            <a href="/admin/admin_main" style="decoration:none;"><div class="now-admin" >관리자</div></a>
-            <div class="now-business" style="display: none;">기업</div>
-            <div class="now-personal" style="display: none;">개인</div>
+            <a href="/admin/admin_main" style="text-decoration:none;"><div class="now-admin" >관리자</div></a>
     </div>
 </c:when>
 <c:otherwise>
-    <div class="top-auth">
+    <div class="top-auth">  
         <span style="font-size: 13px; color: #666; cursor: pointer;">
         	<i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
             	${nickName}님 환영합니다.
@@ -437,10 +435,15 @@
             <button class="logout-btn" style="margin-left:10px;">로그아웃</button>              
             </a>
         </span>
-        <!-- 일단 관리자 빼고 다 숨겨둠 -->
-            <div class="now-admin" style="display: none;">관리자</div>
-            <div class="now-business" style="display: none;">기업</div>
+		<c:if test="${type=='관리자'}">
+            <div class="now-admin">관리자</div>
+		</c:if>
+		<c:if test="${type=='사업자'}">
+            <div class="now-business">사업자</div>
+        </c:if>
+		<c:if test="${type=='개인'}">        
             <div class="now-personal">개인</div>
+		</c:if>
     </div>
 </c:otherwise>
 </c:choose>
@@ -461,16 +464,24 @@
                     <i class="fa-solid fa-briefcase fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
                     구인구직
                 </a>
-                <a href="/boards/mainboard_list"> 
+                <a href="/boards/mainboard_list?page=1"> 
                     <i class="fa-regular fa-message fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i> 
                     커뮤니티
                 </a>               
             </div>           
-        </div>   
-        <a class="my-page" href="/mypage/toMypage"> 
-            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
-            마이페이지
-        </a>    
+        </div>
+        <c:if test="${nickName==null }">   
+	        <a class="my-page" href="members/toLogin"> 
+	            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
+	            마이페이지
+	        </a>  
+        </c:if> 
+        <c:if test="${nickName!=null }">   
+	        <a class="my-page" href="/mypage/toMypage"> 
+	            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
+	            마이페이지
+	        </a>  
+        </c:if>   
     </nav>
 
     <header class="hero">
@@ -515,7 +526,7 @@
  <c:if test="${nickName!=null}">   
     <div class="summary-grid">
         <div class="card add-card">
-            <a href="#" style="text-decoration: none; ">   
+            <a href="/salary/calendar" style="text-decoration: none; ">   
             <span>+ 알바 추가하기</span>
             </a>
         </div>
