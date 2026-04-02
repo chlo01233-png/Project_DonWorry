@@ -38,10 +38,8 @@ public class MypageController {
 	
 	@RequestMapping("/toProfile")
 	public String toProfile(HttpSession session, Model model) {
-		System.out.println("select profile");
 		String id =(String)session.getAttribute("loginId");	
 		List<MembersDTO> list = mdao.selectAll(id);		
-		System.out.println("list size:"+list.size());
 		model.addAttribute("list",list);
 		
 		return "mypage/profile";
