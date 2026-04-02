@@ -1,5 +1,6 @@
 package com.kedu.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,41 @@ public class ReplyController {
 	@Autowired
 	private Gson gson;
 	
-//	@ResponseBody
-//	@RequestMapping("/insert")
-//	public String insert(ReplyDTO dto) {
-//		List<ReplyDTO> list = dao.insert(dto);
-//		return gson.toJson(list);
-//	}
+	@ResponseBody
+	@RequestMapping("/insert")
+	public void insert(ReplyDTO dto) {
+		dao.insert(dto);
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("/list")
+	public String list(int parent_seq) {
+		List<ReplyDTO> list = dao.selectByParent_seq(parent_seq);
+		
+		List<ReplyDTO> comments = new ArrayList<>();
+		List<ReplyDTO> replies = new ArrayList<>();
+
+		for(ReplyDTO dto : list){
+		    if(dto.getRe_reply_seq() == null){
+		        comments.add(dto); // 댓글
+		    }else{
+		        replies.add(dto); // 대댓글
+		    }
+		}
+		
+		for(ReplyDTO comment : comments){
+		    List<ReplyDTO> child = new ArrayList<>();
+
+		    for(ReplyDTO reply : replies){
+		        if(reply.getRe_reply_seq().equals(comment.getSeq())){
+		            child.add(reply);
+		        }
+		    }
+
+		    comment.setReplies(child); // 🔥 핵심
+		}
+		return gson.toJson(comments);
+	}
 
 }

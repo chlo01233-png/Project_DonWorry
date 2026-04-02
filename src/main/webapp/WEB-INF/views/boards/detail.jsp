@@ -477,7 +477,7 @@
             <!-- 작성 정보 -->
             <div class="detail-info">
                 <div class="info-left">
-                    <span class="writer">${dto.member_id }</span>
+                    <span class="writer">${dto.member_nickname }</span>
                     <span class="divider">|</span>
                     <span class="date">
                         <fmt:formatDate value="${dto.write_date}" pattern="yyyy-MM-dd" />
@@ -517,108 +517,7 @@
             	</div>
 			
             <!-- 댓글 리스트 -->
-            <div class="comment-list">
-
-                <!-- 댓글 1 -->
-                <div class="comment-item">
-                    <div class="comment-header">
-                        <div class="comment-left">
-                            <span class="comment-writer">김개발</span>
-                            <span class="divider">|</span>
-                            <span class="comment-date">2026-04-01</span>
-                        </div>
-                        <div class="comment-actions">
-                            <span>수정</span>
-                            <span>삭제</span>
-                            <span>신고</span>
-                        </div>
-                    </div>
-
-                    <div class="comment-content">
-                        저도 처음엔 저축부터 시작했습니다 👍
-                    </div>
-                </div>
-
-                <!-- 댓글 2 -->
-                <div class="comment-item">
-                    <div class="comment-header">
-                        <div class="comment-left">
-                            <span class="comment-writer">직장인A</span>
-                            <span class="divider">|</span>
-                            <span class="comment-date">2026-04-01</span>
-                        </div>
-                        <div class="comment-actions">
-                            <span onclick="toggleReply(this)">답글</span>
-                            <span>수정</span>
-                            <span>삭제</span>
-                            <span class="report-btn">신고</span>
-                        </div>
-
-
-                    </div>
-
-                    <div class="comment-content">
-                        투자도 조금씩 같이 해보는 거 추천드립니다!
-                    </div>
-
-                    <!-- 🔥 여기로 이동해야 정상 -->
-                    <div class="reply-write" style="display: none;">
-                        <textarea placeholder="답글을 입력하세요"></textarea>
-                        <button>등록</button>
-                    </div>
-
-                    <!-- 🔥 대댓글 리스트 -->
-                    <div class="reply-list">
-
-                        <!-- 대댓글 1 -->
-                        <div class="reply-list">
-
-                            <div class="reply-item"> <!-- ✅ 이걸로 고정 -->
-                                <div class="comment-header">
-                                    <div class="comment-left">
-                                        <span class="comment-writer">직장인A</span>
-                                        <span class="divider">|</span>
-                                        <span class="comment-date">2026-04-01</span>
-                                    </div>
-                                    <div class="comment-actions">
-                                        <span>삭제</span>
-                                        <span class="report-btn">신고</span>
-                                    </div>
-                                </div>
-
-                                <div class="comment-content">
-                                    대댓글 내용입니다.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- 대댓글 1 -->
-                        <div class="reply-list">
-
-                            <div class="reply-item"> <!-- ✅ 이걸로 고정 -->
-                                <div class="comment-header">
-                                    <div class="comment-left">
-                                        <span class="comment-writer">직장인A</span>
-                                        <span class="divider">|</span>
-                                        <span class="comment-date">2026-04-01</span>
-                                    </div>
-                                    <div class="comment-actions">
-                                        <span>삭제</span>
-                                        <span class="report-btn">신고</span>
-                                    </div>
-                                </div>
-
-                                <div class="comment-content">
-                                    대댓글 내용입니다.
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+            <div class="comment-list"></div>
 
 
         <div class="container-footer">
@@ -637,15 +536,108 @@
                     const replyBox = el.closest('.comment-item').querySelector('.reply-write');
                     replyBox.style.display = "flex";
          }
+         
+         function getReplyList(){
+        	 $.ajax({
+        		 url : "reply/list",
+        		 data : {parent_seq : "${dto.seq}"},
+        		 dataType:"json"
+        	 }).done(function(list){
+        		 appendReplyList(list);
+        	 })
+         }
+         $(document).ready(function(){
+        	    getReplyList();
+        	});
+         
+         function appendReplyList(list){
+        	 let html = "";
+        	 list.forEach(function(comment){
+        		 html += `<div class="comment-item" data-seq="${comment.seq}">
+        		        <div class="comment-header">
+        	            <div class="comment-left">
+        	                <span class="comment-writer">${comment.member_nickname}</span>
+        	                <span class="divider">|</span>
+        	                <span class="comment-date">${comment.write_date_str}</span>
+        	            </div>
+        	            <div class="comment-actions">
+        	                <span onclick="toggleReply(this)">답글</span>
+        	                <span>수정</span>
+        	                <span>삭제</span>
+        	                <span class="report-btn">신고</span>
+        	            </div>
+
+
+        	        </div>
+
+        	        <div class="comment-content">
+        	            ${comment.content}
+        	        </div>
+
+        	        <div class="reply-write" style="display: none;">
+        	            <textarea placeholder="답글을 입력하세요"></textarea>
+        	            <button class ="reply-btn">등록</button>
+        	        </div>
+        	        <div class="reply-list">`;
+        	        
+        	        if(comment.replies && comment.replies.length > 0){
+        	        	html += `
+        	        		<div class="reply-item"> <!-- ✅ 이걸로 고정 -->
+                            <div class="comment-header">
+                                <div class="comment-left">
+                                    <span class="comment-writer">직장인A</span>
+                                    <span class="divider">|</span>
+                                    <span class="comment-date">2026-04-01</span>
+                                </div>
+                                <div class="comment-actions">
+                                    <span>삭제</span>
+                                    <span class="report-btn">신고</span>
+                                </div>
+                            </div>
+
+                            <div class="comment-content">
+                                대댓글 내용입니다.
+                            </div>
+                        </div>`;
+        	        	
+        	        	
+        	        }
+        	        
+        	        html+=`
+        	        </div>
+        	    </div>`;
+        	 })
+        	 $(".comment-list").html(html);
+         }
+         
+         
          $(".reply-insert-btn").on("click",function(){
         	 $.ajax({
         		 url : "/reply/insert",
         		 data :{parent_seq : "${dto.seq}",
-        			 	member_id : "${nickName}",
-        			 	content : $(".content").html()},
-        		 dataType:"json"	 	
+        			 	member_nickname : "${nickName}",
+        			 	content : $(".content").val(),
+        			 	re_reply_seq: null},
+        		 dataType:"json",
+        		 type: "post"
         	 }).done(function(list){
-        		 
+        		 getReplyList();
+        	 })
+         })
+         $(document).on("click",".reply-btn",function(){
+        	 let commentItem = $(this).closest(".comment-item");
+			 let parentCommentSeq = commentItem.data("seq"); 
+        	 let content = commentItem.find("textarea").val();
+        	 
+        	 $.ajax({
+        		 url : "/reply/insert",
+        		 type: "post",
+        		 data :{parent_seq : "${dto.seq}",
+     			 		member_nickname : "${nickName}",
+    			 		content : content,
+    			 		re_reply_seq: parentCommentSeq}     		 
+        	 }).done(function(){
+        		 getReplyList();
         	 })
          })
          
