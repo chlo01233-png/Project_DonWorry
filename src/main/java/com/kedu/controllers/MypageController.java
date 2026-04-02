@@ -45,6 +45,13 @@ public class MypageController {
 		return "mypage/profile";
 	}
 	
+	@RequestMapping("/profile_update")
+	public String updateProfile(HttpSession session, MembersDTO dto) {
+		String id =(String)session.getAttribute("loginId");	
+		int up = mdao.updateMember(id,dto);
+		return "redirect:/mypage/toProfile";
+	}
+	
 	@RequestMapping("/job_activity")
 	public String to_Job_activity() {
 		return "mypage/job_activity";

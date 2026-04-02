@@ -82,8 +82,10 @@ public class MembersDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<MembersDTO>(MembersDTO.class),id);
 	}
 	
-	/*member 정보 update*/
-	public void updateMember() {
-		
+	/*member 정보 업데이트*/
+	public int updateMember(String id,MembersDTO dto){
+		String sql = "update members set nickname=?, phone=?, email=?, type=? where id=?";
+		return jdbc.update(sql,dto.getNickname(),dto.getPhone(),dto.getEmail(),dto.getType(),id);
 	}
+	
 }

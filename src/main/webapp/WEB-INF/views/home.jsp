@@ -423,7 +423,7 @@
             </a>
         </span>
         <!-- 일단 관리자 빼고 다 숨겨둠 -->
-            <a href="/admin/admin_main" style="decoration:none;"><div class="now-admin" >관리자</div></a>
+            <a href="/admin/admin_main" style="text-decoration:none;"><div class="now-admin" >관리자</div></a>
             <div class="now-business" style="display: none;">기업</div>
             <div class="now-personal" style="display: none;">개인</div>
     </div>
@@ -461,16 +461,24 @@
                     <i class="fa-solid fa-briefcase fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
                     구인구직
                 </a>
-                <a href="/boards/mainboard_list"> 
+                <a href="/boards/mainboard_list?page=1"> 
                     <i class="fa-regular fa-message fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i> 
                     커뮤니티
                 </a>               
             </div>           
-        </div>   
-        <a class="my-page" href="/mypage/toMypage"> 
-            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
-            마이페이지
-        </a>    
+        </div>
+        <c:if test="${nickName==null }">   
+	        <a class="my-page" href="members/toLogin"> 
+	            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
+	            마이페이지
+	        </a>  
+        </c:if> 
+        <c:if test="${nickName!=null }">   
+	        <a class="my-page" href="/mypage/toMypage"> 
+	            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
+	            마이페이지
+	        </a>  
+        </c:if>   
     </nav>
 
     <header class="hero">
@@ -515,7 +523,7 @@
  <c:if test="${nickName!=null}">   
     <div class="summary-grid">
         <div class="card add-card">
-            <a href="#" style="text-decoration: none; ">   
+            <a href="/salary/calendar" style="text-decoration: none; ">   
             <span>+ 알바 추가하기</span>
             </a>
         </div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -304,6 +305,7 @@
         font-weight: 600;
         cursor: pointer;
         font-size: 15px;
+        text-decoration:none;
     }
     .update-btn{
         background-color: #2563eb;
@@ -335,6 +337,7 @@
         font-weight: 600;
         cursor: pointer;
         font-size: 15px;
+        text-decoration:none;
     }
     /*하단 푸터*/
     .container-footer{
@@ -405,14 +408,16 @@
             </div>          
                 <div class="info-item">
                     <span class="info-label">가입일</span>
-                    <span class="info-val">2026.03.03</span>
+                    <span class="info-val">
+					    <fmt:formatDate value="${list[0].join_date}" pattern="yyyy-MM-dd" />
+					</span>
                 </div>  
             </div>          
         </div>
     </div>
     
 <!-- 내활동 -->
-<form action="/" class="update-form">
+<form action="profile_update" class="update-form">
 <div class="bottom-grid">
     <div class="edit-section">
         <div class="edit-section-title">기본 정보 수정</div>
@@ -452,10 +457,12 @@
             <input type="email" class="form-input update-input" placeholder="이메일을 입력하세요" readonly 
 			name="email" value="${list[0].email}" style="background-color: #f9fafb; color: #999; cursor: not-allowed;" >
         </div>
+        <input type="hidden" class="form-type" readonly 
+			name="type" value="${list[0].type}" style="background-color: #f9fafb; color: #999; cursor: not-allowed;" >
     </div>
     
     <div class="submit-btn-box">
-		<a href="/mypage/toMypage"><button type="button" class="back-btn">뒤로가기</button><a>
+		<a href="/mypage/toMypage" style="text-decoration:none;"><button type="button" class="back-btn">뒤로가기</button><a>
 		<button type="button" class="update-btn">수정</button>
         <button type="button" class="cancel-btn">취소</button>
         <button type="submit" class="save-btn">수정 완료</button>
@@ -472,8 +479,8 @@
 
 	//수정 버튼 누르면
 	$(".update-btn").on("click",function(){
-		$(".cancel-btn").css("display","block");
-		$(".save-btn").css("display","block");
+		$(".cancel-btn").css("display","inline");
+		$(".save-btn").css("display","inline");
 
 		$(".update-btn,.back-btn").css("display","none");
 		//수정 가능한것들 활성화
@@ -494,10 +501,8 @@
 	//취소 버튼 누르면
 	$(".cancel-btn").on("click",function(){
         //수정과 뒤로가기 나타냄
-		$(".update-btn,.back-btn").css("display","block");
+		$(".update-btn,.back-btn").css("display","inline");
 		$(".cancel-btn,.save-btn").css("display","none");
-
-        $(".update-input").val("");
 
         //취소 시 스타일 수정
         $(".update-input").prop("readonly",true);
