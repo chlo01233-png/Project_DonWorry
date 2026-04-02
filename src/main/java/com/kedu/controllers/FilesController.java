@@ -31,10 +31,11 @@ public class FilesController {
 	    }
 	    
 	    File dest = new File(path + fileName);
+	    System.out.println("실제 저장 시도 경로: " + dest.getAbsolutePath());
 	    file.transferTo(dest);
 
 	    Map<String, String> map = new HashMap<>();
-	    map.put("url", "http://10.10.55.87:8080/upload/" + fileName); // ⭐ 이 URL이 핵심
+	    map.put("url", "http://10.10.55.87/upload/" + fileName); // ⭐ 이 URL이 핵심
 
 	    return map;
 	}
