@@ -91,9 +91,28 @@ body {
     padding: 5px 10px;
 }
 
-.now-admin,
-.now-business,
-.now-personal {
+ .logout-btn { 
+    width:60px;
+    height:30px;
+    background-color: #ffffff; 
+    color: #868e96;
+    border: 1px solid #dee2e6; 
+    border-radius: 6px; 
+    font-size: 13px;
+    transition: all 0.2s ease; /* 부드러운 변화를 위해 추가 */
+}
+.logout-btn:hover { 
+    width:60px;
+    height:30px;
+   	background-color: #f8f9fa;
+    color: #495057;
+    border-color: #ced4da;
+    border: 1px solid #dee2e6; 
+    border-radius: 6px; 
+    font-size: 13px;
+    transition: all 0.2s ease; /* 부드러운 변화를 위해 추가 */
+}		
+.now-admin{
     width: 60px;
     height: 30px;
     background: #2563eb;
@@ -172,7 +191,8 @@ body {
 .summary-sub {
     margin-top: 6px;
     font-size: 13px;
-    color: #2563eb;
+    /* color: #2563eb; */
+    color: #0f172a;
 }
 
 /* ===== Panel ===== */
@@ -344,34 +364,47 @@ body {
 </head>
 <body>
 <div class="container">
-
-    <div class="top-auth">
-        <span style="font-size:13px;color:#666;">
-            <a href="members/login" style="text-decoration:none;color:black">
-                <i class="fa-regular fa-user fa-lg" style="color:rgb(203,203,203); margin-right:5px;"></i>로그인
+	<div class="top-auth">  
+        <span style="font-size: 13px; color: #666; cursor: pointer;">
+        	<i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
+            	${nickName}님 환영합니다.
+            <a href="/members/logout" style="text-decoration: none; color:black">
+            <button class="logout-btn" style="margin-left:10px;">로그아웃</button>              
             </a>
         </span>
-        <div class="now-admin">관리자</div>
+		<c:if test="${type=='관리자'}">
+            <a href="/admin/admin_main" style="text-decoration:none;"><div class="now-admin">관리자</div></a>
+		</c:if>
     </div>
-
-    <nav class="navbar">
-        <div style="display:flex; align-items:center; gap:40px;">
+   <nav class="navbar">
+        <div style="display: flex; align-items: center; gap: 40px;">
             <a href="/" class="logo">돈워리</a>
+
             <div class="nav-menu">
-                <a href="/" class="active"><i class="fa-solid fa-house fa-lg" style="color:rgb(36,99,235);"></i> 홈</a>
-                <a href="salary/calendar"><i class="fa-regular fa-calendar fa-lg" style="color:rgb(203,203,203); margin-right:5px;"></i>급여 캘린더</a>
-                <a href="#"><i class="fa-solid fa-briefcase fa-lg" style="color:rgb(203,203,203); margin-right:5px;"></i>구인구직</a>
-                <a href="#"><i class="fa-regular fa-message fa-lg" style="color:rgb(203,203,203); margin-right:5px;"></i>커뮤니티</a>
+                <a href="/admin/admin_main" >
+                   <i class="fa-solid fa-wrench fa-lg" style="color: rgb(197, 197, 197); margin-right:6px;"></i>
+                    관리자 대시보드
+                </a> 
+                <a href="/admin/admin_boards"  class="active">
+                   <i class="fa-solid fa-file-pen fa-lg" style="color: rgb(36, 99, 235); margin-right:6px;"></i>
+                    게시물 관리
+                </a>  
+                <a href="/admin/admin_members">
+                   <i class="fa-solid fa-user-shield fa-lg" style="color: rgb(197, 197, 197);  margin-right:6px;"></i>
+                    회원 관리
+                </a> 
+                <a href="/admin/admin_inquiry">
+                   <i class="fa-regular fa-circle-question fa-lg" style="color: rgb(197, 197, 197); margin-right:6px;"></i>
+                    Q&A 관리
+                </a>               
             </div>
         </div>
-        <a class="my-page" href="#"><i class="fa-solid fa-user-gear fa-lg" style="color:rgb(197,197,197);"></i>마이페이지</a>
     </nav>
-
     <main class="admin-page">
         <div class="page-header">
             <div class="page-title">
-                <h2>게시글 관리</h2>
-                <p>커뮤니티 게시글 조회, 숨김 처리, 삭제가 가능합니다.</p>
+                <h2>게시물 관리</h2>
+                <p>커뮤니티 게시글 조회, 삭제가 가능합니다.</p>
             </div>
             <div class="page-badge">
                 <i class="fa-regular fa-clipboard" style="margin-right:6px;"></i>
@@ -386,9 +419,9 @@ body {
                 <div class="summary-sub">오늘 신규 27건</div>
             </div>
             <div class="summary-card">
-                <div class="summary-label">숨김 처리</div>
-                <div class="summary-value">32</div>
-                <div class="summary-sub">신고 누적 게시글 포함</div>
+                <div class="summary-label">공지 게시글</div>
+                <div class="summary-value">6</div>
+                <a href="#" style="color: #2563eb; "><div class="summary-sub" style="color: #2563eb; ">작성하러 가기</div></a>
             </div>
             <div class="summary-card">
                 <div class="summary-label">삭제 대기</div>
@@ -399,7 +432,7 @@ body {
 
         <section class="panel">
             <div class="panel-head">
-                <h3>게시글 목록</h3>
+                <h3>회원 게시글 목록</h3>
             </div>
 
             <div class="filter-row">
@@ -440,7 +473,6 @@ body {
                         <td><span class="state-pill state-show">게시중</span></td>
                         <td>
                             <button class="btn-light-blue" type="button">보기</button>
-                            <button class="btn-light-blue" type="button">숨김</button>
                             <button class="btn-red" type="button">삭제</button>
                         </td>
                     </tr>
@@ -453,7 +485,6 @@ body {
                         <td><span class="state-pill state-show">게시중</span></td>
                         <td>
                             <button class="btn-light-blue" type="button">보기</button>
-                            <button class="btn-light-blue" type="button">숨김</button>
                             <button class="btn-red" type="button">삭제</button>
                         </td>
                     </tr>
@@ -466,7 +497,6 @@ body {
                         <td><span class="state-pill state-hide">숨김</span></td>
                         <td>
                             <button class="btn-light-blue" type="button">보기</button>
-                            <button class="btn-light-blue" type="button">복구</button>
                             <button class="btn-red" type="button">삭제</button>
                         </td>
                     </tr>
@@ -479,7 +509,6 @@ body {
                         <td><span class="state-pill state-show">게시중</span></td>
                         <td>
                             <button class="btn-light-blue" type="button">보기</button>
-                            <button class="btn-light-blue" type="button">숨김</button>
                             <button class="btn-red" type="button">삭제</button>
                         </td>
                     </tr>
