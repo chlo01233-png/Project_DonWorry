@@ -60,8 +60,6 @@ public class BoardsController {
 	}
 	@RequestMapping("/write")
 	public String write(BoardsDTO dto,MultipartFile[] files) {
-		System.out.println(dto.getContent() + " : " + dto.getCategory() );
-		
 		
 		int nextVal = dao.seqNextval();
 		System.out.println(nextVal);
