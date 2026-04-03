@@ -134,7 +134,7 @@ body {
 }
 
 .type-selector input[type="radio"] {
-	display: none; /* 실제 체크박스는 숨김 */
+	 display: none; /* 실제 체크박스는 숨김  */
 }
 
 .type-selector label {
@@ -221,10 +221,10 @@ body {
 			<div class="form-group">
 				<label>가입 유형</label>
 				<div class="type-selector">
-					<input type="radio" id="typeIndividual" name="memberType"
-						value="INDIVIDUAL" checked> <label for="typeIndividual">개인
-						회원</label> <input type="radio" id="typeBusiness" name="memberType"
-						value="BUSINESS"> <label for="typeBusiness">기업 회원</label>
+					<input type="radio" id="typeIndividual" name="type" value="개인"
+						checked> <label for="typeIndividual">개인 회원</label> <input
+						type="radio" id="typeBusiness" name="type" value="사업자"> <label
+						for="typeBusiness">기업 회원</label>
 				</div>
 			</div>
 
@@ -352,23 +352,21 @@ body {
 
 	<script>
 	$(document).ready(function() {
-	    $('input[name="memberType"]').change(function() {
-	        if ($(this).val() === 'BUSINESS') {
-	            // --- 기업 회원 선택 시 ---
-	            $('#businessNumberGroup').show(); // 사업자번호 보이기
-	            $('#business_number').attr('required', true);
-	            
-	            $('#rrnGroup').hide();           // 생년월일 숨기기
-	            $('#rrn').val('');               // 값 비우기
-	            $('#rrn').attr('required', false); // 필수 해제
+	    $('.type-selector label').click(function() {
+	        // 라벨을 클릭하면 연결된 라디오 버튼을 강제로 체크함
+	        const targetId = $(this).attr('for');
+	        $('#' + targetId).prop('checked', true).change(); 
+	    });
+
+	    $('input[name="type"]').change(function() {
+	        console.log("현재 선택된 값: " + $(this).val()); // 로그로 확인!
+	        if ($(this).val() === '사업자') {
+	            $('#businessNumberGroup').show();
+	            $('#business_number').prop('required', true);
 	        } else {
-	            // --- 개인 회원 선택 시 ---
-	            $('#businessNumberGroup').hide(); // 사업자번호 숨기기
+	            $('#businessNumberGroup').hide();
 	            $('#business_number').val("");
-	            $('#business_number').attr('required', false);
-	            
-	            $('#rrnGroup').show();           // 생년월일 보이기
-	            $('#rrn').attr('required', true);  // 필수 설정
+	            $('#business_number').prop('required', false);
 	        }
 	    });
 	});
