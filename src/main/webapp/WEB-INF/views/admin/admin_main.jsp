@@ -115,9 +115,7 @@ body {
     transition: all 0.2s ease; /* 부드러운 변화를 위해 추가 */
 }		
 
-.now-admin,
-.now-business,
-.now-personal {
+.now-admin{
     width: 60px;
     height: 30px;
     background-color: #2563eb;
