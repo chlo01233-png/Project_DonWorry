@@ -497,6 +497,7 @@
         </c:forEach>
     </div> 
     <div class="page-nav">
+    
        
         </div>
     <div class="container-footer">
