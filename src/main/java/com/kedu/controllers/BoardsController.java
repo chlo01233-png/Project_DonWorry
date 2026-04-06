@@ -38,7 +38,7 @@ public class BoardsController {
 		List<BoardsDTO> mainList =  dao.mainList(page*10-9,page*10);
 		
 		
-		int recordTotalCount = dao.recordTotalCount();
+		int recordTotalCount = dao.mainRecordTotalCount();
 		
 		model.addAttribute("currentPage",page);
 		model.addAttribute("recordCountPerPage",10);
@@ -183,5 +183,20 @@ public class BoardsController {
 		dao.view_count(seq,view_count);
 		return "redirect:/boards/detail?seq="+seq;
 	}
-	
+	@RequestMapping("/freeboard_list")
+	public String freeboard_list(int page,Model model) {
+		
+		List<BoardsDTO> freeList = dao.freeList(page*10-9,page*10);
+		
+		int recordTotalCount = dao.freeRecordTotalCount();
+		
+		model.addAttribute("currentPage",page);
+		model.addAttribute("recordCountPerPage",10);
+		model.addAttribute("naviCountPerPage",10);
+		model.addAttribute("recordTotalCount",recordTotalCount);
+		//model.addAttribute("recordTotalCount",233); // 임시
+		model.addAttribute("freeList", freeList);
+		
+		return "boards/freeboard_list";
+	}
 }

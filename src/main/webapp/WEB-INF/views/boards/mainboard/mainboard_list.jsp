@@ -27,6 +27,7 @@
 	}
 	
 	.community-container {
+	min-height: calc(100vh - 200px); /* 화면 높이에서 헤더/푸터 대략적인 값을 뺀 최소 높이 */
 	    max-width: 1100px;
 	    text-align: center;
 	    margin: 0 auto;
@@ -236,7 +237,7 @@
 	
 	        /* 게시글 묶은 div */
 	        .post-container {
-	            max-height: 600px;
+	            /*max-height: 600px;*/
 	            /*overflow-y:auto;*/
 	            background-color: #ffffff;
 	            padding: 10px;
@@ -418,8 +419,8 @@
     </div>
 
     <nav class="tab-menu">
-        <button class="tab-item active"><a href="/boards/mainboard_list?page=1"  style="text-decoration: none; ">메인 게시판</a></button>
-        <button class="tab-item"> 자유 게시판</button>
+        <button class="tab-item active" onclick = "location.href = '/boards/mainboard_list?page=1'">메인 게시판</button>                  
+            <button class="tab-item " onclick = "location.href = '/boards/freeboard_list?page=1'"> 자유 게시판</button>
         <button class="tab-item"> 질문 게시판</button>
         <button class="tab-item"> 리뷰 게시판</button>
     </nav>
@@ -553,6 +554,9 @@ $(".floating-write-btn").on("click",function(){
 			let a = $("<a>")
 			a.attr("href" , "/boards/mainboard_list?page="+i);
 			a.addClass("page-num");
+			if (i == currentPage) {
+		        a.addClass("active");
+		    }
 			a.html(i);
 			$(".page-nav").append(a);
 		}
