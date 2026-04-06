@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>돈워리 - 자유게시판</title>
+<title>돈워리 - 리뷰게시판</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    
@@ -478,15 +478,15 @@
 
         <nav class="tab-menu">
             <button class="tab-item" onclick = "location.href = '/boards/mainboard_list?page=1'">메인 게시판</button>                  
-            <button class="tab-item active" onclick = "location.href = '/boards/freeboard_list?page=1'"> 자유 게시판</button>
+            <button class="tab-item " onclick = "location.href = '/boards/freeboard_list?page=1'"> 자유 게시판</button>
             <button class="tab-item" onclick = "location.href = '/boards/qnaboard_list?page=1'"> 질문 게시판</button>
-            <button class="tab-item" onclick = "location.href = '/boards/reviewboard_list?page=1'"> 리뷰 게시판</button>
+            <button class="tab-item active" onclick = "location.href = '/boards/reviewboard_list?page=1'"> 리뷰 게시판</button>
         </nav>
 
         <section class="post-list">
             <div class="post-container">
 
-                <c:forEach var="i" items="${freeList }">
+                <c:forEach var="i" items="${reviewList }">
                     <article class="post-card"
                         onclick="location.href='/boards/view?seq=${i.seq}&view_count=${i.view_count }'">
                         <div class="user-info">

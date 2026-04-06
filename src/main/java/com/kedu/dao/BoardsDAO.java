@@ -103,6 +103,55 @@ public class BoardsDAO {
 		return jdbc.query(sql,new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class),start,end);
 		
 	}
+	public int qnaRecordTotalCount() {
+		String sql = "select count(*) from boards where category = 'qna'";
+		return jdbc.queryForObject(sql,Integer.class);
+	}
+	
+	public List<BoardsDTO> qnaList(int start, int end){
+		String sql = "SELECT * FROM (\r\n"
+				+ "    SELECT \r\n"
+				+ "        b.seq, \r\n"
+				+ "        m.nickname AS member_id, \r\n"
+				+ "        b.category, \r\n"
+				+ "        b.title, \r\n"
+				+ "        b.content, \r\n"
+				+ "        b.view_count, \r\n"
+				+ "        b.write_date,\r\n"
+				+ "        (SELECT COUNT(*) FROM reply r WHERE r.parent_seq = b.seq) AS reply_count, \r\n"
+				+ "        ROW_NUMBER() OVER(ORDER BY b.seq DESC) AS rn \r\n"
+				+ "    FROM boards b \r\n"
+				+ "    LEFT JOIN members m ON b.member_id = m.id \r\n"
+				+ "    WHERE b.category = 'qna' \r\n"
+				+ ") \r\n"
+				+ "WHERE rn BETWEEN ? AND ?";
+		return jdbc.query(sql,new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class),start,end);
+		
+	}
+	public int reviewRecordTotalCount() {
+		String sql = "select count(*) from boards where category = 'review'";
+		return jdbc.queryForObject(sql,Integer.class);
+	}
+	public List<BoardsDTO> reviewList(int start, int end){
+		String sql = "SELECT * FROM (\r\n"
+				+ "    SELECT \r\n"
+				+ "        b.seq, \r\n"
+				+ "        m.nickname AS member_id, \r\n"
+				+ "        b.category, \r\n"
+				+ "        b.title, \r\n"
+				+ "        b.content, \r\n"
+				+ "        b.view_count, \r\n"
+				+ "        b.write_date,\r\n"
+				+ "        (SELECT COUNT(*) FROM reply r WHERE r.parent_seq = b.seq) AS reply_count, \r\n"
+				+ "        ROW_NUMBER() OVER(ORDER BY b.seq DESC) AS rn \r\n"
+				+ "    FROM boards b \r\n"
+				+ "    LEFT JOIN members m ON b.member_id = m.id \r\n"
+				+ "    WHERE b.category = 'review' \r\n"
+				+ ") \r\n"
+				+ "WHERE rn BETWEEN ? AND ?";
+		return jdbc.query(sql,new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class),start,end);
+		
+	}
 	
 
 }
