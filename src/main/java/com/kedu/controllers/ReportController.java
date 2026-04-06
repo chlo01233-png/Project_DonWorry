@@ -18,8 +18,7 @@ public class ReportController {
 	
 	@ResponseBody
 	@PostMapping("/report")
-	public String report(ReportDTO dto) {
-		
+	public String report(ReportDTO dto) {		
 		int result = dao.report(dto);
 		if(result > 0) {
 			return "success";
