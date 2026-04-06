@@ -47,7 +47,7 @@ public class BoardsController {
 		//model.addAttribute("recordTotalCount",233); // 임시
 		model.addAttribute("mainList", mainList);
 		
-		return "boards/mainboard/mainboard_list";
+		return "boards/mainboard_list";
 	}
 	
 	@RequestMapping("/jobpost")
@@ -199,4 +199,37 @@ public class BoardsController {
 		
 		return "boards/freeboard_list";
 	}
+	@RequestMapping("/qnaboard_list")
+	public String qnaboard_list(int page,Model model) {
+		
+		List<BoardsDTO> qnaList = dao.qnaList(page*10-9,page*10);
+		
+		int recordTotalCount = dao.qnaRecordTotalCount();
+		
+		model.addAttribute("currentPage",page);
+		model.addAttribute("recordCountPerPage",10);
+		model.addAttribute("naviCountPerPage",10);
+		model.addAttribute("recordTotalCount",recordTotalCount);
+		//model.addAttribute("recordTotalCount",233); // 임시
+		model.addAttribute("qnaList", qnaList);
+		
+		return "boards/qnaboard_list";
+	}
+	@RequestMapping("/reviewboard_list")
+	public String reviewboard_list(int page,Model model) {
+		
+		List<BoardsDTO> reviewList = dao.reviewList(page*10-9,page*10);
+		
+		int recordTotalCount = dao.reviewRecordTotalCount();
+		
+		model.addAttribute("currentPage",page);
+		model.addAttribute("recordCountPerPage",10);
+		model.addAttribute("naviCountPerPage",10);
+		model.addAttribute("recordTotalCount",recordTotalCount);
+		//model.addAttribute("recordTotalCount",233); // 임시
+		model.addAttribute("reviewList", reviewList);
+		
+		return "boards/reviewboard_list";
+	}
+	
 }
