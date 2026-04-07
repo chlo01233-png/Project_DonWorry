@@ -530,18 +530,20 @@
             <button class="tab-item" onclick = "location.href = '/boards/reviewboard_list?page=1'"> 리뷰 게시판</button>
         </nav>
 		<div class="notice-board">
-		    <%-- <c:forEach var="i" items="${noticeList}"> --%>
+		    <c:forEach var="i" items="${mainList}">
+		    <c:if test="${i.member_id=='admin'}">
 		        <div class="notice-board-item">
 		        	<i class="fa-solid fa-circle-exclamation" style="color: rgb(64, 131, 231); margin-right:10px;"></i>
 		            <a href="/notices/detail?seq=${i.seq}" class="notice-item-info">                
 		                <div class="notice-title" style="flex: 3;">${i.title}커뮤니티 이용 규칙 안내</div>                
-		                <div class="notice-writer">${i.writer}</div>	                
+		                <div class="notice-writer">${i.member_id}</div>	                
 		                <div class="notice-date">
 		                    <fmt:formatDate value="${i.write_date}" pattern="yyyy-MM-dd" />
 		                </div>
 		            </a>
 		        </div>
-		    <%-- </c:forEach> --%>
+		        </c:if>
+		    </c:forEach>
 		</div>
         <section class="post-list">
             <div class="post-container">
