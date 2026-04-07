@@ -80,9 +80,16 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/admin_members")
-	public String toMembers() {
+	public String toMembers(Model model, int page) {
+		List<MembersDTO> membersList = dao.getMembers(page*10-9, page*10);
 		
-//		dao.getMembersList();
+		int recordTotalCount = dao.membersTotalCount();
+		
+		model.addAttribute("currentPage",page);
+		model.addAttribute("recordCountPerPage",10);
+		model.addAttribute("naviCountPerPage",10);
+		model.addAttribute("recordTotalCount",recordTotalCount);
+		model.addAttribute("membersList", membersList);
 		
 		return "admin/admin_members";
 	}
@@ -182,6 +189,7 @@ public class AdminController {
 		
 		return "/admin/qna_detail";
 	}
+	
 	
 	
 
