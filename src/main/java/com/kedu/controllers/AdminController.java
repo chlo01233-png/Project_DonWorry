@@ -21,6 +21,7 @@ import com.kedu.dao.BoardsDAO;
 import com.kedu.dao.FilesDAO;
 import com.kedu.dao.MembersDAO;
 import com.kedu.dao.QnaDAO;
+import com.kedu.dao.ReplyDAO;
 import com.kedu.dto.BoardsDTO;
 import com.kedu.dto.FilesDTO;
 import com.kedu.dto.MembersDTO;
@@ -45,6 +46,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminDAO adao;
+	
+	@Autowired
+	private ReplyDAO rdao;
 	
 	@RequestMapping("/admin/admin_main")
 	public String adminMain(Model model) {
@@ -127,6 +131,9 @@ public class AdminController {
 		List<BoardsDTO> notice_mainList =  adao.adminNoticeList();
 		model.addAttribute("notice_mainList",notice_mainList);
 		
+		//댓글 목록
+		int replyCount = rdao.replyCount();
+		model.addAttribute("replyCount",replyCount);
 		return "admin/admin_boards";
 	}
 	
@@ -183,6 +190,11 @@ public class AdminController {
 		
 		
 		return "redirect:/admin/admin_boards?page=1";
+	}
+	
+	@RequestMapping("/admin_reply")
+	public String admin_Reply() {
+		return "admin/admin_reply";
 	}
 	
 	@RequestMapping("/admin_inquiry")
