@@ -30,27 +30,31 @@ public class BoardsDAO {
 		String sql = "insert into boards values(?,?,?,?,?,0,sysdate)";
 		jdbc.update(sql,next,dto.getMember_id(),dto.getCategory(),dto.getTitle(),dto.getContent());
 	}
-	public List<BoardsDTO> mainList(int start, int end){
+	public List<BoardsDTO> mainList(int start, int end, String loginId) {
 		String sql = "SELECT * FROM (\r\n"
-				+ "    SELECT \r\n"
-				+ "        b.seq, \r\n"
-				+ "        m.nickname AS member_id, \r\n"
-				+ "        b.category, \r\n"
-				+ "        b.title, \r\n"
-				+ "        b.content, \r\n"
-				+ "        b.view_count, \r\n"
-				+ "        b.write_date,\r\n"
-				+ "        COUNT(r.seq) AS reply_count, \r\n"
-				+ "        ROW_NUMBER() OVER(ORDER BY b.seq DESC) AS rn \r\n"
-				+ "    FROM boards b \r\n"
-				+ "    LEFT JOIN members m ON b.member_id = m.id \r\n"
-				+ "    LEFT JOIN reply r ON b.seq = r.parent_seq \r\n"
-				+ "    GROUP BY \r\n"
-				+ "        b.seq, m.nickname, b.category, b.title, \r\n"
-				+ "        b.content, b.view_count, b.write_date \r\n"
-				+ ") WHERE rn BETWEEN ? AND ?";
-		return jdbc.query(sql,new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class),start,end);
-		
+	            + "    SELECT \r\n"
+	            + "        b.seq, \r\n"
+	            + "        m.nickname AS member_id, \r\n"
+	            + "        b.category, \r\n"
+	            + "        b.title, \r\n"
+	            + "        b.content, \r\n"
+	            + "        b.view_count, \r\n"
+	            + "        b.write_date,\r\n"
+	            + "        COUNT(r.seq) AS reply_count, \r\n"
+	            + "        (SELECT COUNT(*) FROM bookmark WHERE board_seq = b.seq AND member_id = ?) AS bookmarked, \r\n"
+	            + "        ROW_NUMBER() OVER(ORDER BY b.seq DESC) AS rn \r\n"
+	            + "    FROM boards b \r\n"
+	            + "    LEFT JOIN members m ON b.member_id = m.id \r\n"
+	            + "    LEFT JOIN reply r ON b.seq = r.parent_seq \r\n"
+	            + "    GROUP BY \r\n"
+	            + "        b.seq, m.nickname, b.category, b.title, \r\n"
+	            + "        b.content, b.view_count, b.write_date \r\n"
+	            + ") WHERE rn BETWEEN ? AND ?";
+	            
+	    // loginId가 null일 경우를 대비해 빈 문자열 처리 (로그인 안 한 유저는 북마크가 모두 0으로 나옴)
+	    String idParam = (loginId == null) ? "" : loginId;
+	    
+	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class), idParam, start, end);
 	}
 	
 	public int getTodayBoardCount() {
@@ -89,7 +93,7 @@ public class BoardsDAO {
 		return jdbc.queryForObject(sql,Integer.class);
 	}
 	
-	public List<BoardsDTO> freeList(int start, int end){
+	public List<BoardsDTO> freeList(int start, int end,String loginId){
 		String sql = "SELECT * FROM (\r\n"
 				+ "    SELECT \r\n"
 				+ "        b.seq, \r\n"
@@ -100,13 +104,16 @@ public class BoardsDAO {
 				+ "        b.view_count, \r\n"
 				+ "        b.write_date,\r\n"
 				+ "        (SELECT COUNT(*) FROM reply r WHERE r.parent_seq = b.seq) AS reply_count, \r\n"
+				+ "        (SELECT COUNT(*) FROM bookmark bm WHERE bm.board_seq = b.seq AND bm.member_id = ?) AS bookmarked, "
 				+ "        ROW_NUMBER() OVER(ORDER BY b.seq DESC) AS rn \r\n"
 				+ "    FROM boards b \r\n"
 				+ "    LEFT JOIN members m ON b.member_id = m.id \r\n"
 				+ "    WHERE b.category = 'free' \r\n"
 				+ ") \r\n"
 				+ "WHERE rn BETWEEN ? AND ?";
-		return jdbc.query(sql,new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class),start,end);
+		String idParam = (loginId == null) ? "" : loginId;
+	    
+	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class), idParam, start, end);
 		
 	}
 	public int qnaRecordTotalCount() {
@@ -114,7 +121,7 @@ public class BoardsDAO {
 		return jdbc.queryForObject(sql,Integer.class);
 	}
 	
-	public List<BoardsDTO> qnaList(int start, int end){
+	public List<BoardsDTO> qnaList(int start, int end,String loginId){
 		String sql = "SELECT * FROM (\r\n"
 				+ "    SELECT \r\n"
 				+ "        b.seq, \r\n"
@@ -125,20 +132,23 @@ public class BoardsDAO {
 				+ "        b.view_count, \r\n"
 				+ "        b.write_date,\r\n"
 				+ "        (SELECT COUNT(*) FROM reply r WHERE r.parent_seq = b.seq) AS reply_count, \r\n"
+				+ "        (SELECT COUNT(*) FROM bookmark bm WHERE bm.board_seq = b.seq AND bm.member_id = ?) AS bookmarked, "
 				+ "        ROW_NUMBER() OVER(ORDER BY b.seq DESC) AS rn \r\n"
 				+ "    FROM boards b \r\n"
 				+ "    LEFT JOIN members m ON b.member_id = m.id \r\n"
 				+ "    WHERE b.category = 'qna' \r\n"
 				+ ") \r\n"
 				+ "WHERE rn BETWEEN ? AND ?";
-		return jdbc.query(sql,new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class),start,end);
+		String idParam = (loginId == null) ? "" : loginId;
+	    
+	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class), idParam, start, end);
 		
 	}
 	public int reviewRecordTotalCount() {
 		String sql = "select count(*) from boards where category = 'review'";
 		return jdbc.queryForObject(sql,Integer.class);
 	}
-	public List<BoardsDTO> reviewList(int start, int end){
+	public List<BoardsDTO> reviewList(int start, int end,String loginId){
 		String sql = "SELECT * FROM (\r\n"
 				+ "    SELECT \r\n"
 				+ "        b.seq, \r\n"
@@ -149,13 +159,16 @@ public class BoardsDAO {
 				+ "        b.view_count, \r\n"
 				+ "        b.write_date,\r\n"
 				+ "        (SELECT COUNT(*) FROM reply r WHERE r.parent_seq = b.seq) AS reply_count, \r\n"
+				+ "        (SELECT COUNT(*) FROM bookmark bm WHERE bm.board_seq = b.seq AND bm.member_id = ?) AS bookmarked, "
 				+ "        ROW_NUMBER() OVER(ORDER BY b.seq DESC) AS rn \r\n"
 				+ "    FROM boards b \r\n"
 				+ "    LEFT JOIN members m ON b.member_id = m.id \r\n"
 				+ "    WHERE b.category = 'review' \r\n"
 				+ ") \r\n"
 				+ "WHERE rn BETWEEN ? AND ?";
-		return jdbc.query(sql,new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class),start,end);
+		String idParam = (loginId == null) ? "" : loginId;
+	    
+	    return jdbc.query(sql, new BeanPropertyRowMapper<BoardsDTO>(BoardsDTO.class), idParam, start, end);
 		
 	}
 	

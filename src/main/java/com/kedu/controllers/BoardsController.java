@@ -37,9 +37,11 @@ public class BoardsController {
 	
 
 	@RequestMapping("/mainboard_list")
-	public String toMainBoard(int page,Model model) {
+	public String toMainBoard(int page,Model model,HttpSession session) {
 		
-		List<BoardsDTO> mainList =  dao.mainList(page*10-9,page*10);
+		String loginId = (String)session.getAttribute("loginId");
+		
+		List<BoardsDTO> mainList =  dao.mainList(page*10-9,page*10,loginId);
 		
 		
 		int recordTotalCount = dao.mainRecordTotalCount();
@@ -194,9 +196,9 @@ public class BoardsController {
 		return "redirect:/boards/detail?seq="+seq;
 	}
 	@RequestMapping("/freeboard_list")
-	public String freeboard_list(int page,Model model) {
-		
-		List<BoardsDTO> freeList = dao.freeList(page*10-9,page*10);
+	public String freeboard_list(int page,Model model,HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		List<BoardsDTO> freeList = dao.freeList(page*10-9,page*10,loginId);
 		
 		int recordTotalCount = dao.freeRecordTotalCount();
 		
@@ -210,9 +212,9 @@ public class BoardsController {
 		return "boards/freeboard_list";
 	}
 	@RequestMapping("/qnaboard_list")
-	public String qnaboard_list(int page,Model model) {
-		
-		List<BoardsDTO> qnaList = dao.qnaList(page*10-9,page*10);
+	public String qnaboard_list(int page,Model model,HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		List<BoardsDTO> qnaList = dao.qnaList(page*10-9,page*10,loginId);
 		
 		int recordTotalCount = dao.qnaRecordTotalCount();
 		
@@ -226,9 +228,10 @@ public class BoardsController {
 		return "boards/qnaboard_list";
 	}
 	@RequestMapping("/reviewboard_list")
-	public String reviewboard_list(int page,Model model) {
+	public String reviewboard_list(int page,Model model,HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
 		
-		List<BoardsDTO> reviewList = dao.reviewList(page*10-9,page*10);
+		List<BoardsDTO> reviewList = dao.reviewList(page*10-9,page*10,loginId);
 		
 		int recordTotalCount = dao.reviewRecordTotalCount();
 		
