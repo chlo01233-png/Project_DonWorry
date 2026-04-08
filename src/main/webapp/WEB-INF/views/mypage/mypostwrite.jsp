@@ -81,7 +81,7 @@
 
         }
         .nav-menu a.active { color: #2563eb; }
-        .mypage.active { color: #2563eb; }
+        .my-page.active { color: #2563eb; }
 /*사용사 식별 표시*/
         /*관리자 버튼*/
         .now-admin {

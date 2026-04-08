@@ -967,7 +967,7 @@ body {
 						</div>
 
 						<div class="form-row">
-							<label for="detail_total_pay">총 급여</label>
+							<label for="detail_total_pay">총 급여 (세금 및 보험료 적용)</label>
 							<input type="number" id="detail_total_pay" name="total_pay" min="0" value="0" required readonly>
 						</div>
 					</div>

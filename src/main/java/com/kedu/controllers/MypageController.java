@@ -201,7 +201,7 @@ public class MypageController {
 	
 	@RequestMapping("/toWrite")
 	public String toWrite() {
-		return "mypage/write";
+		return "mypage/mypostwrite";
 	}
 	@RequestMapping("/write")
 	public String write(BoardsDTO dto,MultipartFile[] files) {
