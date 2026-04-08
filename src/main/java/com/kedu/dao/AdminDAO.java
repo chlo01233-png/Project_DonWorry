@@ -92,4 +92,22 @@ public class AdminDAO {
 		return jdbc.query(sql, new BeanPropertyRowMapper<ReplyDTO>(ReplyDTO.class),start,end);
 	}
 	
+	//신고된 댓글 가져옴
+	public List<ReplyDTO> admin_report_replyList() {
+		String sql="SELECT \r\n"
+				+ "    r.seq, r.parent_seq, m.nickname AS member_id, \r\n"
+				+ "    r.content, r.write_date, r.re_reply_seq, r.member_id AS writer,\r\n"
+				+ "    COUNT(rp.seq) AS report_count\r\n"
+				+ "FROM reply r \r\n"
+				+ "JOIN members m ON r.member_id = m.id\r\n"
+				+ "JOIN report rp ON r.seq = rp.reply_seq \r\n"
+				+ "GROUP BY \r\n"
+				+ "    r.seq, r.parent_seq, m.nickname, r.content, \r\n"
+				+ "    r.write_date, r.re_reply_seq, r.member_id\r\n"
+				+ "HAVING COUNT(rp.seq) > 0 -- 신고가 1개 이상인 것만\r\n"
+				+ "ORDER BY r.seq DESC";
+		
+		return jdbc.query(sql, new BeanPropertyRowMapper<ReplyDTO>(ReplyDTO.class));
+	}
+	
 }

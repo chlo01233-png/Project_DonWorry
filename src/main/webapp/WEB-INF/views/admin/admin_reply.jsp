@@ -478,27 +478,23 @@ body {
                         <th>글 내용</th>
                         <th>작성자</th>
                         <th>작성일</th>
-                        <th>상태</th>
                         <th>관리</th>
                     </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="i" items="${notice_mainList}">
-                <c:if test="${fn:contains(i.member_id,'관리자')}">
+                <c:forEach var="i" items="${report_replyList}">
                     <tr>
                         <td>${i.seq}</td>
-                        <td>${i.title}</td>
+                        <td>${i.content}</td>
                         <td>${i.member_id}</td>
                         <td id="write_date">
                         	<fmt:formatDate value="${i.write_date}" pattern="yyyy-MM-dd"/>
                         </td>
-                        <td><span class="state-pill state-show">게시중</span></td>
                         <td>
-                            <button class="board-detail-btn notice-detail-btn" type="button"  data-seq="${i.seq}">보기</button>
-                            <button class="board-del-btn notice-del-btn" type="button"  data-seq="${i.seq}">삭제</button>
+                            <button class="board-del-btn reply-del-btn" type="button"  data-seq="${i.seq}">삭제</button>
                         </td>
+                        
                     </tr>
-                </c:if>
                 </c:forEach>
 
                 </tbody>

@@ -207,6 +207,10 @@ public class AdminController {
 		model.addAttribute("recordTotalCount",recordTotalCount);
 		model.addAttribute("replyList", replyList);
 		
+		//신고댓글만 불러옴
+		List<ReplyDTO> report_replyList = adao.admin_report_replyList();
+		model.addAttribute("report_replyList", report_replyList);
+		
 		return "admin/admin_reply";
 	}
 	
