@@ -95,7 +95,7 @@ public class AdminController {
 	    model.addAttribute("boardChartData", Arrays.asList(120, 180, 240, 210, 230, 260));
 	    model.addAttribute("inquiryChartData", Arrays.asList(80, 130, 180, 160, 170, 190));
 
-	    model.addAttribute("recentMembers", recentMembersList);
+	    //model.addAttribute("recentMembers", recentMembersList);
 
 	    return "admin/admin_main";
 	}
