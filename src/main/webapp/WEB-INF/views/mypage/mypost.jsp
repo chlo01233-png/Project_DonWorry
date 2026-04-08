@@ -543,7 +543,7 @@ body {
 
 			<section class="post-list">
 				<div class="list-top">
-					<div class="list-count">전체 게시글 ${fn:length(allList)}개</div>
+					<div class="list-count">전체 게시글 ${count }개</div>
 
 				</div>
 
@@ -585,11 +585,6 @@ body {
 			</section>
 
 			<div class="page-nav">
-				<a href="#" class="page-num"><span
-					class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span></a>
-				<a href="#" class="page-num active">1</a> <a href="#"
-					class="page-num">2</a> <a href="#" class="page-num"><span
-					class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span></a>
 			</div>
 		</div>
 	</div>
@@ -601,6 +596,67 @@ body {
 	</div>
 
 	<script>
+
+	let recordTotalCount = ${recordTotalCount}; // 총 개수
+	let recordCountPerPage = ${recordCountPerPage}; // 한페이지에 몇개 (10)
+	let naviCountPerPage  = ${naviCountPerPage }; // navi 몇개 (10)
+	let currentPage = ${currentPage}; // 현재 페이지
+	let pageTotalCount = Math.ceil(recordTotalCount/recordCountPerPage); 
+	
+	let startNavi = Math.floor((currentPage - 1) / naviCountPerPage) * naviCountPerPage +1;
+	let endNavi = startNavi + naviCountPerPage - 1;
+	
+	if(endNavi > pageTotalCount){
+		endNavi = pageTotalCount;
+	}
+	
+	let needPrev = true;
+	let needNext = true;
+	
+	if(startNavi == 1){
+		needPrev = false;
+	}
+	if(endNavi == pageTotalCount){
+		needNext = false;
+	}
+	if(needPrev){
+		
+		let span = $("<span>");
+		span.addClass("material-symbols-outlined");
+		span.css("font-size","16px");
+		span.html("chevron_left");
+		let a = $("<a>");
+		a.addClass("page-num");
+		a.attr("href","/mypage/mypost?page="+ (startNavi-1));
+		a.append(span);
+		$(".page-nav").append(a);
+	}
+	
+	for(let i = startNavi; i <= endNavi; i++){
+		let a = $("<a>")
+		a.attr("href" , "/mypage/mypost?page="+i);
+		a.addClass("page-num");
+		
+		if (i == currentPage) {
+	        a.addClass("active");
+	    }
+		a.html(i);
+		$(".page-nav").append(a);
+	}
+	
+	if(needNext){
+		 
+		 let span = $("<span>");
+			span.addClass("material-symbols-outlined");
+			span.css("font-size","16px");
+			span.html("chevron_right");
+			let a = $("<a>");
+			a.addClass("page-num");
+			a.attr("href","/mypage/mypost?page="+(endNavi+1));
+			a.append(span);
+			$(".page-nav").append(a);
+	}		
+			
     $(".tab-item").on("click", function () {
         $(".tab-item").removeClass("active");
         $(this).addClass("active");

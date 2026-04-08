@@ -392,7 +392,7 @@
 
             <!-- 버튼 영역 -->
             <div class="btn-group">
-                <button type="button" class="cancel-btn" onclick="location.href='/mypage/mypost'">취소</button>
+                <button type="button" class="cancel-btn" onclick="location.href='/mypage/mypost?page=1'">취소</button>
                 <button type="submit" class="submit-btn">등록</button>
             </div>
 

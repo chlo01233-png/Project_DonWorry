@@ -721,7 +721,7 @@
 
             <!-- 버튼 -->
             <div class="detail-actions">
-                <button onclick="location.href='/mypage/mypost'">목록</button>
+                <button onclick="location.href='/mypage/mypost?page=1'">목록</button>
                 <c:if test="${loginId == board_writer }">
                     <button onclick="location.href='/mypage/toUpdate?seq=${dto.seq}'">수정</button>
                     <button type="button" class="boards-delete-btn">삭제</button>
@@ -930,7 +930,7 @@
         	 if (!confirm("정말 삭제하시겠습니까?")) {
  				return false;
  			}
-        	 location.href = "/mypage/mypost}
+        	 location.href = "/mypage/delete?seq="+${dto.seq}
          })
          $(document).on("click",".reply-delete-btn",function(){
         	 if (!confirm("정말 삭제하시겠습니까?")) {

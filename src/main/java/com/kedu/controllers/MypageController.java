@@ -114,10 +114,20 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/mypost")
-	public String toMypost(HttpSession session, Model model) {
+	public String toMypost(HttpSession session, Model model, int page) {
 		String memberId = (String)session.getAttribute("loginId");
-		List<BoardsDTO> allList = bdao.selectById(memberId);
+		
+		int count = bdao.countMypost(memberId);
+		List<BoardsDTO> allList = bdao.selectById(memberId, page*10-9, page*10);
+		
+		int recordTotalCount = bdao.mypostRecordTotalCount(memberId);
+		
+		model.addAttribute("currentPage", page);
+		model.addAttribute("recordCountPerPage",10);
+		model.addAttribute("naviCountPerPage",10);
+		model.addAttribute("recordTotalCount",recordTotalCount);
 		model.addAttribute("allList", allList);
+		model.addAttribute("count", count);
 		return "mypage/mypost";
 	}
 	
@@ -196,7 +206,7 @@ public class MypageController {
 	@RequestMapping("/delete")
 	public String delete(int seq) {
 		bdao.delete(seq);
-		return "redirect:/mypage/mypost";
+		return "redirect:/mypage/mypost?page=1";
 	}
 	
 	@RequestMapping("/toWrite")
@@ -233,7 +243,7 @@ public class MypageController {
 		}
 		
 		
-		return "redirect:/mypage/mypost";
+		return "redirect:/mypage/mypost?page=1";
 	}
 
 	
