@@ -424,11 +424,15 @@
                 <div class="faq-title">
                     <i class="fa-solid fa-circle-question" style="color: #2563eb;"></i> 자주 묻는 질문
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question"><span>아이디/비밀번호를 분실했습니다. 어떻게 찾나요?</span><i
+                
+                <c:forEach var = "i" items = "${faqList }">
+                	<div class="faq-item">
+                    	<div class="faq-question"><span>${i.title }</span><i
                             class="fa-solid fa-chevron-down"></i></div>
-                    <div class="faq-answer">로그인 페이지 하단의 '아이디 찾기' 메뉴를 이용해 주세요.</div>
-                </div>
+                    	<div class="faq-answer">${i.content }</div>
+                	</div>
+                </c:forEach>
+                
             </div>
 
             <h3 style="font-size: 18px; margin-bottom: 15px; font-weight: 700;">내 문의 내역</h3>
@@ -500,9 +504,7 @@
                     <i class="fa-solid fa-chevron-left"></i>
                 </a>
             </c:when>
-            <c:otherwise>
-                <span class="nav-btn disabled"><i class="fa-solid fa-chevron-left"></i></span>
-            </c:otherwise>
+            
         </c:choose>
 
         <c:forEach var="i" begin="${startNavi}" end="${endNavi}">
@@ -515,9 +517,7 @@
                     <i class="fa-solid fa-chevron-right"></i>
                 </a>
             </c:when>
-            <c:otherwise>
-                <span class="nav-btn disabled"><i class="fa-solid fa-chevron-right"></i></span>
-            </c:otherwise>
+            
         </c:choose>
     </div>
 </c:if>
@@ -529,12 +529,16 @@
         <p style="margin-top: 10px; font-size: 11px; letter-spacing: 0.5px;">개인정보처리방침 | 이용약관 | 고객센터</p>
     </div>
 
-    <script>
-        $(document).ready(function () {
-            $(".faq-question").click(function () {
-                $(this).parent(".faq-item").toggleClass("active");
-            });
+    <script> 
+    
+    console.log(${needNext})
+    
+    
+    $(document).ready(function () {
+        $(".faq-question").click(function () {
+            $(this).parent(".faq-item").toggleClass("active");
         });
+    });
     </script>
 </body>
 

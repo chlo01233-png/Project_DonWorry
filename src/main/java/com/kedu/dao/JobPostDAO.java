@@ -196,6 +196,7 @@ public class JobPostDAO {
         return jdbc.query(sql, jobPostMapper);
     }
     
+
 	public int mypostRecordTotalCount(String memberId) {
 		String sql = "select count(*) from job_post where member_id = ?";
 		return jdbc.queryForObject(sql,Integer.class, memberId);
@@ -208,4 +209,11 @@ public class JobPostDAO {
     }
     
     
+
+    public int getPostCount() {
+    	String sql = "select count(*) from job_post";
+    	
+    	return jdbc.queryForObject(sql, Integer.class);
+    }
+
 }
