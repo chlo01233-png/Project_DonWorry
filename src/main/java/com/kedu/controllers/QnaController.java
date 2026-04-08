@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kedu.dao.FaqDAO;
 import com.kedu.dao.FilesDAO;
 import com.kedu.dao.QnaDAO;
 import com.kedu.dao.Qna_replyDAO;
+import com.kedu.dto.FaqDTO;
 import com.kedu.dto.FilesDTO;
 import com.kedu.dto.QnaDTO;
 import com.kedu.dto.Qna_replyDTO;
@@ -32,8 +35,11 @@ public class QnaController {
 	@Autowired
 	private Qna_replyDAO qdao;
 	
+	@Autowired
+	private FaqDAO fadao;
+	
 	@RequestMapping("/qna")
-	public String qna(HttpSession session,Model model,int page) {
+	public String qna(HttpSession session,Model model,@RequestParam(value="page", defaultValue="1")int page) {
 		String member_id = (String)session.getAttribute("loginId");
 		List<QnaDTO> list = null;
 		if(member_id != null) {
@@ -70,6 +76,9 @@ public class QnaController {
 		if(endNavi == pageTotalCount){
 			needNext = false;
 		}
+		
+		List<FaqDTO> faqList = fadao.list();
+		model.addAttribute("faqList",faqList);
 
 		// --- Model에 담기 ---
 		model.addAttribute("currentPage", page);
