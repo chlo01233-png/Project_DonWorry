@@ -715,7 +715,12 @@ body {
     border-color: #f59e0b;
 }
 
-
+.detail-content img{
+        max-width: 100%;    /* 부모 너비를 넘지 않음 */
+    height: auto;       /* 비율 유지 */
+    display: block;     /* 하단 여백 제거 */
+    margin: 10px 0;    /* 이미지 위아래 여백 */
+        }
 
 </style>
 </head>
@@ -867,11 +872,12 @@ $(".reply-insert-btn").on("click", function() {
         }
     }).done(function(resp) {
         if(resp === "success") {
-            $(".reply-content").val("");
+            $(".content").val("");
             getReplyList(); // 목록 갱신
             // 관리자 답변은 보통 1개이므로 입력창을 숨기기도 함
             $(".comment-write").hide();
             $("#status").removeClass("status-waiting").addClass("status-complete");
+            $("#status").html("답변완료");
         } else {
             alert("권한이 없거나 등록에 실패했습니다.");
         }
