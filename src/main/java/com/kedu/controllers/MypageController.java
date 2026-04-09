@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.kedu.commons.EncryptionUtils;
@@ -22,10 +23,12 @@ import com.kedu.dao.FilesDAO;
 import com.kedu.dao.JobPostDAO;
 import com.kedu.dao.MembersDAO;
 import com.kedu.dao.MypageDAO;
+import com.kedu.dao.ResumeDAO;
 import com.kedu.dto.BoardsDTO;
 import com.kedu.dto.FilesDTO;
 import com.kedu.dto.JobPostDTO;
 import com.kedu.dto.MembersDTO;
+import com.kedu.dto.ResumeDTO;
 
 @Controller
 @RequestMapping("/mypage")
@@ -43,6 +46,8 @@ public class MypageController {
 	private JobPostDAO jpdao;
 	@Autowired
 	private BookmarkDAO bookdao;
+	@Autowired
+	private ResumeDAO rdao;
 	
 	
 	@Autowired
@@ -97,6 +102,16 @@ public class MypageController {
 		return "mypage/resume";
 	}
 	
+	//이력서 저장
+	@RequestMapping("/insert_resume")
+	public String insert_resume(HttpSession session,ResumeDTO dto) {
+		String id = (String)session.getAttribute("loginId");
+		dto.setId(id);
+		int resume = rdao.insert_resume(dto);
+		System.out.println("resume:"+resume);
+		return "redirect:/mypage/job_activity";
+	}
+	
 	//대분류 선택 시 소분류 목록을 가져오는 AJAX API
     @ResponseBody
     @RequestMapping(value = "/getSubCategories", produces = "application/json; charset=utf-8")
@@ -106,7 +121,10 @@ public class MypageController {
     }
 	
 	@RequestMapping("/toAccount")
-	public String toAccount() {
+	public String toAccount(HttpSession session,Model model) {
+		String id = (String)session.getAttribute("loginId");
+		MembersDTO dto = mdao.selectByLoginId(id);
+		model.addAttribute("dto",dto);
 		return "mypage/account";
 	}
 	
@@ -314,5 +332,29 @@ public class MypageController {
 		model.addAttribute("count", count);
 		return "mypage/bookmark";
 	}
+	@ResponseBody
+	@RequestMapping("/checkPw")
+	public boolean checkPw(String pw ,HttpSession session) {
+		String id = (String)session.getAttribute("loginId");
+		return mdao.login(id,eu.getSha512(pw));
+	}
+	@RequestMapping("/changePw")
+	public String changePw(HttpSession session,String pw , String newPw,RedirectAttributes ra) {
+		String id = (String)session.getAttribute("loginId");
+		int result = mdao.changePw(id,eu.getSha512(pw),eu.getSha512(newPw));
+		
+		if (result > 0) {
+	        // [성공] 로그아웃 후 로그인 폼으로
+			ra.addFlashAttribute("msg", "비밀번호가 변경되었습니다. 다시 로그인해주세요.");
+	        session.invalidate();
+	        
+	        return "redirect:/members/toLogin"; 
+	    } else {
+	        // [실패] 다시 설정 페이지로 (메시지 포함)
+	        ra.addFlashAttribute("msg", "현재 비밀번호가 일치하지 않습니다.");
+	        return "redirect:/mypage/toAccount"; // 원래 있던 페이지 주소
+	    }
+	}
+	
 	
 }
