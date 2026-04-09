@@ -48,8 +48,5 @@ public class MypageDAO {
 		    return jdbc.query(sql, new BeanPropertyRowMapper<JobPostDTO>(JobPostDTO.class), parentId);
 		}
 		
-		//이력서 저장
-		public void insert_resume() {
-			String sql = "insert into resume values()";
-		}
+	
 }

@@ -41,8 +41,55 @@
     .nav-menu a { text-decoration: none; color: #666; font-size: 14px; font-weight: 500; }
     .my-page { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #666; font-size: 14px; font-weight: 500; padding: 5px 10px; cursor: pointer; }
     .nav-menu a.active { color: #2563eb; }
-    .now-admin { width:60px; height:30px; background-color: #2563eb; color: white; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 13px; cursor: pointer; }
-
+         /*기업 버튼*/
+        .now-business {
+            width:60px;
+            height:30px;
+            background-color: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center; /*세로 중앙 정렬*/
+            justify-content: center; /* 가로 중앙 정렬 */
+            border-radius: 6px;
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        /*개인 버튼*/
+        .now-personal {
+            width:60px;
+            height:30px;
+            background-color: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center; /*세로 중앙 정렬*/
+            justify-content: center; /* 가로 중앙 정렬 */
+            border-radius: 6px;
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+	 .logout-btn { 
+         	width:60px;
+            height:30px;
+		    background-color: #ffffff; 
+		    color: #868e96;
+		    border: 1px solid #dee2e6; 
+		    border-radius: 6px; 
+		    font-size: 13px;
+		    transition: all 0.2s ease; /* 부드러운 변화를 위해 추가 */
+		}
+		.logout-btn:hover { 
+         	width:60px;
+            height:30px;
+		   	background-color: #f8f9fa;
+		    color: #495057;
+		    border-color: #ced4da;
+		    border: 1px solid #dee2e6; 
+		    border-radius: 6px; 
+		    font-size: 13px;
+		    transition: all 0.2s ease; /* 부드러운 변화를 위해 추가 */
+		}
 /* [3] 이력서 폼 스타일 */
     .page { padding: 56px 0 72px; width: 70%; margin:auto; }
     .page-title { font-size: 24px; font-weight: 800; color: #222; text-align: left; margin-bottom: 18px; }
@@ -159,14 +206,37 @@
 <body>
 
 <div class="community-container">
-    <div class="top-auth">
-        <span style="font-size: 13px; color: #666; cursor: pointer;">
-            <a href="members/login" style="text-decoration: none; color:black">
-                <i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>로그인
-            </a>
-        </span>
-        <div class="now-admin">관리자</div>
-    </div>
+    <c:choose>
+	<c:when test="${nickName==null}">
+	    <div class="top-auth">
+	        <span style="font-size: 13px; color: #666; cursor: pointer;">
+	            <a href="members/toLogin" style="text-decoration: none; color:black; margin-right:10px;">
+	                <i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>로그인
+	            </a>
+	        </span>
+	    </div>
+	</c:when>
+	<c:otherwise>
+	    <div class="top-auth">  
+	        <span style="font-size: 13px; color: #666; cursor: pointer;">
+	        	<i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
+	            	${nickName}님 환영합니다.
+	            <a href="members/logout" style="text-decoration: none; color:black">
+	            <button class="logout-btn" style="margin-left:10px;">로그아웃</button>              
+	            </a>
+	        </span>
+			<c:if test="${type=='관리자'}">
+	            <a href="/admin/admin_main" style="text-decoration:none;"><div class="now-admin">관리자</div></a>
+			</c:if>
+			<c:if test="${type=='사업자'}">
+	            <div class="now-business">사업자</div>
+	        </c:if>
+			<c:if test="${type=='개인'}">        
+	            <div class="now-personal">개인</div>
+			</c:if>
+	    </div>
+	</c:otherwise>
+	</c:choose>
     <nav class="navbar">
         <div style="display: flex; align-items: center; gap: 40px;">
             <a href="/" class="logo"> 돈워리</a>
@@ -175,11 +245,11 @@
                     <i class="fa-solid fa-house fa-lg" style="color: rgb(36, 99, 235);"></i>
                     홈
                 </a>
-                <a href="salary/calendar">
+                <a href="/salary/calendar">
                     <i class="fa-regular fa-calendar fa-lg" style="color:rgb(203, 203, 203); margin-right:5px;"></i>
                     급여 캘린더
                 </a>
-                <a href="#">
+                <a href="/jobposts/jobpost">
                     <i class="fa-solid fa-briefcase fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
                     구인구직
                 </a>
@@ -192,17 +262,25 @@
                  </a>              
             </div>          
         </div>   
-        <a class="my-page" href="#">
-            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
-            마이페이지
-        </a>    
+        <c:if test="${nickName==null }">   
+	        <a class="my-page" href="members/toLogin"> 
+	            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
+	            마이페이지
+	        </a>  
+        </c:if> 
+        <c:if test="${nickName!=null }">   
+	        <a class="my-page" href="/mypage/toMypage"> 
+	            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
+	            마이페이지
+	        </a>  
+        </c:if>   
     </nav>
 
     <div class="page">
         <div class="page-title">이력서 등록</div>
         <hr class="title-line">
 
-        <form action="/mypage/insert" method="post">
+        <form action="/mypage/insert_resume" method="post">
             <div class="resume-form-card">
                 <div class="form-group">
                     <label class="form-label">이력서 제목</label>
@@ -215,7 +293,7 @@
                         <span><i class="fa-solid fa-briefcase" style="margin-right:8px;"></i> <span id="selectedCategory">직종 선택</span></span>
                         <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: #ccc;"></i>
                     </button>
-                    <input type="hidden" name="preferred_job" id="preferred_job">
+                    <input type="hidden" name="prferred_job" id="preferred_job">
 
                     <div id="categoryLayer">
                         <div class="category-lists">
@@ -236,15 +314,15 @@
                 </div>
 
                 <div class="form-group">
-				    <label class="form-label">희망 근무 요일</label>
+				    <label class="form-label">희망 근무 조건</label>
 				    <div class="radio-group">
-				        <input type="radio" name="working_day" id="day_weekday"  class="form-input" value="평일" required>
+				        <input type="radio" name="working_condition" id="day_weekday"  class="form-input" value="평일" required>
 				        <label for="day_weekday" class="radio-label">평일</label>
 				
-				        <input type="radio" name="working_day" id="day_weekend" class="form-input" value="주말">
+				        <input type="radio" name="working_condition" id="day_weekend" class="form-input" value="주말">
 				        <label for="day_weekend" class="radio-label">주말</label>
 				
-				        <input type="radio" name="working_day" id="day_none" class="form-input" value="요일무관">
+				        <input type="radio" name="working_condition" id="day_none" class="form-input" value="요일무관">
 				        <label for="day_none" class="radio-label">요일무관</label>
 				    </div>
 				</div>
@@ -252,17 +330,17 @@
 				<div class="form-group">
 				    <label class="form-label">경력 여부</label>
 				    <div class="radio-group">
-				        <input type="radio" name="career_type" id="career_new" value="신입" class="rdo-career" checked>
+				        <input type="radio" name="career" id="career_new" value="신입" class="rdo-career" checked>
 				        <label for="career_new" class="radio-label">신입</label>
 				
-				        <input type="radio" name="career_type" id="career_old" value="경력" class="rdo-career">
+				        <input type="radio" name="career" id="career_old" value="경력" class="rdo-career">
 				        <label for="career_old" class="radio-label">경력</label>
 				    </div>
 
 				</div>
                 <div class="form-group">
                     <label class="form-label">경력 사항</label>
-                    <input type="text" name="career" class="form-input" id="career_input" disabled 
+                    <input type="text" name="career_write" class="form-input" id="career_input" disabled 
                     placeholder="예: 스타벅스 강남점 6개월 근무 (경력이 없다면 '신입' 기재)">
                 </div>
 
@@ -366,6 +444,12 @@
     		$("#career_input").prop("disabled",true).val("");
     	}
     })
+    
+    // 등록 버튼을 누를 때 실행되는 함수 (예시)
+	$("form").on("submit", function() {
+	    // 전송 직전에 disabled를 풀어줘야 서버로 데이터가 전송됩니다.
+	    $("#career_input").attr("disabled", false); 
+	});
 </script>
 </body>
 </html>
