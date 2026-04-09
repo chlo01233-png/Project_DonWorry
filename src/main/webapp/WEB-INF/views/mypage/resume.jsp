@@ -61,7 +61,39 @@
     .form-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
     
     textarea.form-input { min-height: 180px; resize: none; line-height: 1.8; }
-
+	
+	/*희망 근무 요일*/
+	/* 근무 요일 & 경력 선택용 라디오 그룹 스타일 */
+	.radio-group {
+	    display: flex;
+	    gap: 10px;
+	    margin-bottom: 15px;
+	}
+	
+	.radio-group input[type="radio"] {
+	    display: none; /* 실제 라디오 버튼은 숨김 */
+	}
+	
+	.radio-label {
+	    flex: 1;
+	    text-align: center;
+	    padding: 12px;
+	    border: 1px solid #e2e8f0;
+	    border-radius: 10px;
+	    cursor: pointer;
+	    font-size: 14px;
+	    background: #fff;
+	    transition: all 0.2s;
+	    color: #64748b;
+	}
+	
+	.radio-group input[type="radio"]:checked + .radio-label {
+	    background-color: #eff6ff;
+	    border-color: #2563eb;
+	    color: #2563eb;
+	    font-weight: 700;
+	}
+	
 /* [직종 선택 레이어 전용 스타일] */
 .filter-btn {
     width: 100%; display: flex; justify-content: space-between; align-items: center;
@@ -153,7 +185,11 @@
                 </a>
                 <a href="/boards/mainboard_list">
                     <i class="fa-regular fa-message fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
-                    커뮤니티</a>              
+                    커뮤니티</a> 
+                 <a href="/qna/qna?page=1"> 
+                   <i class="fa-solid fa-question fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
+                   고객지원
+                 </a>              
             </div>          
         </div>   
         <a class="my-page" href="#">
@@ -199,17 +235,35 @@
                     </div>
                 </div>
 
-                <div class="form-group" >
-                    <label class="form-label">희망 근무시간</label>
-                    <div class="time" style="display: flex;">
-                        <input type="time" name="start_time" class="form-input start_time" >
-                        <input type="time" name="end_time" class="form-input end_time">
-                    </div>
-                </div>
+                <div class="form-group">
+				    <label class="form-label">희망 근무 요일</label>
+				    <div class="radio-group">
+				        <input type="radio" name="working_day" id="day_weekday"  class="form-input" value="평일" required>
+				        <label for="day_weekday" class="radio-label">평일</label>
+				
+				        <input type="radio" name="working_day" id="day_weekend" class="form-input" value="주말">
+				        <label for="day_weekend" class="radio-label">주말</label>
+				
+				        <input type="radio" name="working_day" id="day_none" class="form-input" value="요일무관">
+				        <label for="day_none" class="radio-label">요일무관</label>
+				    </div>
+				</div>
 
+				<div class="form-group">
+				    <label class="form-label">경력 여부</label>
+				    <div class="radio-group">
+				        <input type="radio" name="career_type" id="career_new" value="신입" class="rdo-career" checked>
+				        <label for="career_new" class="radio-label">신입</label>
+				
+				        <input type="radio" name="career_type" id="career_old" value="경력" class="rdo-career">
+				        <label for="career_old" class="radio-label">경력</label>
+				    </div>
+
+				</div>
                 <div class="form-group">
                     <label class="form-label">경력 사항</label>
-                    <input type="text" name="career" class="form-input" placeholder="예: 스타벅스 강남점 6개월 근무 (경력이 없다면 '신입' 기재)">
+                    <input type="text" name="career" class="form-input" id="career_input" disabled 
+                    placeholder="예: 스타벅스 강남점 6개월 근무 (경력이 없다면 '신입' 기재)">
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
@@ -303,6 +357,15 @@
         }
     });
 });
+    
+    //경력 여부 조건식
+    $(".rdo-career").on("change",function(){
+    	if($(this).val()== "경력"){//===은 데이터 타입까지 같아야 함
+    		$("#career_input").prop("disabled",false).focus();
+    	}else{
+    		$("#career_input").prop("disabled",true).val("");
+    	}
+    })
 </script>
 </body>
 </html>
