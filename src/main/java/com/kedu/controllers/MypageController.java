@@ -23,10 +23,12 @@ import com.kedu.dao.FilesDAO;
 import com.kedu.dao.JobPostDAO;
 import com.kedu.dao.MembersDAO;
 import com.kedu.dao.MypageDAO;
+import com.kedu.dao.ResumeDAO;
 import com.kedu.dto.BoardsDTO;
 import com.kedu.dto.FilesDTO;
 import com.kedu.dto.JobPostDTO;
 import com.kedu.dto.MembersDTO;
+import com.kedu.dto.ResumeDTO;
 
 @Controller
 @RequestMapping("/mypage")
@@ -44,6 +46,8 @@ public class MypageController {
 	private JobPostDAO jpdao;
 	@Autowired
 	private BookmarkDAO bookdao;
+	@Autowired
+	private ResumeDAO rdao;
 	
 	
 	@Autowired
@@ -96,6 +100,16 @@ public class MypageController {
 		model.addAttribute("main_jobCateList",main_jobCateList);
 		
 		return "mypage/resume";
+	}
+	
+	//이력서 저장
+	@RequestMapping("/insert_resume")
+	public String insert_resume(HttpSession session,ResumeDTO dto) {
+		String id = (String)session.getAttribute("loginId");
+		dto.setId(id);
+		int resume = rdao.insert_resume(dto);
+		System.out.println("resume:"+resume);
+		return "redirect:/mypage/job_activity";
 	}
 	
 	//대분류 선택 시 소분류 목록을 가져오는 AJAX API
@@ -341,5 +355,6 @@ public class MypageController {
 	        return "redirect:/mypage/toAccount"; // 원래 있던 페이지 주소
 	    }
 	}
+	
 	
 }
