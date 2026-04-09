@@ -355,6 +355,26 @@ public class MypageController {
 	        return "redirect:/mypage/toAccount"; // 원래 있던 페이지 주소
 	    }
 	}
-	
+	@RequestMapping("/myresume")
+	public String myResume(HttpSession session,Model model) {
+		String id = (String)session.getAttribute("loginId");
+		int count = rdao.countById(id);
+		model.addAttribute("count",count);
+		List<ResumeDTO> list = rdao.myList(id);
+		model.addAttribute("list",list);
+		
+		return "mypage/resume/myresume";
+	}
+	@RequestMapping("/resume_detail")
+	public String resume_detail(int seq,Model model) {
+		ResumeDTO dto = rdao.detail(seq);
+		model.addAttribute("dto",dto);
+		return "mypage/resume/detail";
+	}
+	@RequestMapping("/resume_delete")
+	public String resume_delete(int seq) {
+		rdao.delete(seq);
+		return "redirect:/mypage/myresume";
+	}
 	
 }
