@@ -347,7 +347,7 @@
         </div>
         <div class="header-right">
             <button class="btn-apply">지원하기</button>
-            <button class="btn-list" onclick="location.href='/jobposts/jobpost'">목록으로</button>
+            <button class="btn-list" onclick="location.href='/jobposts/jobpost?page=${page}'">목록으로</button>
         </div>
     </div>
 
