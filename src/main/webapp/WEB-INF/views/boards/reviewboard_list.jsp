@@ -229,6 +229,7 @@
             margin-bottom: 20px;
             transition: transform 0.2s;
             cursor: pointer;
+            word-break: break-all;
         }
 
         .post-card:hover {

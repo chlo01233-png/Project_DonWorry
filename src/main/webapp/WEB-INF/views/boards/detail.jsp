@@ -220,6 +220,7 @@
             font-weight: 800;
             margin-bottom: 20px;
             line-height: 1.4;
+            word-break: break-all;
         }
 
         /* 작성 정보 */
@@ -242,6 +243,7 @@
             /* 가독성 핵심 */
             color: #333;
             min-height: 300px;
+            word-break: break-all;
         }
         .detail-content img{
         max-width: 100%;    /* 부모 너비를 넘지 않음 */
@@ -370,6 +372,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            word-break: break-all;
         }
 
         /* 댓글 */

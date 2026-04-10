@@ -350,6 +350,16 @@
     cursor: default;
     pointer-events: none;
 }
+.qna-list .title-cell {
+    
+    padding-left: 20px;
+    
+    /* 핵심: 말줄임표 처리 */
+    max-width: 0;           /* 너비 계산을 위한 기초값 */
+    white-space: nowrap;    /* 줄바꿈 방지 */
+    overflow: hidden;       /* 넘치는 부분 숨김 */
+    text-overflow: ellipsis; /* 넘치는 부분 "..." 표시 */
+}
     </style>
 </head>
 
