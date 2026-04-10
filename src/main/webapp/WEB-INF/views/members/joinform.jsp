@@ -403,7 +403,7 @@ body {
 <c:when test="${nickName==null}">
     <div class="top-auth">
         <span style="font-size: 13px; color: #666; cursor: pointer;">
-            <a href="members/toLogin" style="text-decoration: none; color:black; margin-right:10px;">
+            <a href="/members/toLogin" style="text-decoration: none; color:black; margin-right:10px;">
                 <i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>로그인
             </a>
         </span>
@@ -458,7 +458,7 @@ body {
             </div>           
         </div>
         <c:if test="${nickName==null }">   
-	        <a class="my-page" href="members/toLogin"> 
+	        <a class="my-page" href="/members/toLogin"> 
 	            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
 	            마이페이지
 	        </a>  
