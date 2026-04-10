@@ -557,7 +557,7 @@
             </div>           
         </div>
         <c:if test="${nickName==null }">   
-	        <a class="my-page" href="members/toLogin"> 
+	        <a class="my-page" href="/members/toLogin"> 
 	            <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i>
 	            마이페이지
 	        </a>  
@@ -587,7 +587,7 @@
 <c:when test="${nickName==null }">
 <div class="summary-grid">
         <div class="card">
-            <a href="members/toLogin" style="text-decoration: none; ">
+            <a href="/members/toLogin" style="text-decoration: none; ">
             <div class="card-title">🏪 편의점 알바</div>
             <div class="info-item"><span class="info-label">예상 급여</span><span class="info-val blue">1,245,000원</span></div>
             <div class="info-item"><span class="info-label">근무 일수</span><span class="info-val">16일</span></div>
@@ -654,7 +654,7 @@
     <div class="job-board">
     <c:forEach var="i" items="${jobList}">
         <div class="job-board-item">
-            <a href="/jobposts/jobdetail?seq=${i.seq}" class="job-item-info">
+            <a href="/jobposts/jobdetail?seq=${i.seq}&page=1" class="job-item-info">
                 <div class="item-name">${i.company_name}</div>
                 <div class="item-role">${i.main_category_name}</div>
                 <div class="item-loc">${i.sido}/${i.gugun}</div>
