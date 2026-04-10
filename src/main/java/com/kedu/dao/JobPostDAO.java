@@ -176,17 +176,17 @@ public class JobPostDAO {
         String sql = "INSERT INTO job_post (seq, member_id, company_name, phone, sido, gugun, dong, address_detail, count, title, pay, work_days, work_starttime, work_endtime, main_category, sub_category, content, benefit, write_date) "
                    + "VALUES (job_post_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate)";
         
-        // String으로 넘어온다면 Integer로 파싱해서 체크 (DTO 필드 타입에 따라 맞춰주세요)
-        int startTime = Integer.parseInt(dto.getWork_starttime());
-        int endTime = Integer.parseInt(dto.getWork_endtime());
+//        // String으로 넘어온다면 Integer로 파싱해서 체크 (DTO 필드 타입에 따라 맞춰주세요)
+//        int startTime = Integer.parseInt(dto.getWork_starttime());
+//        int endTime = Integer.parseInt(dto.getWork_endtime());
         
-//        String[] startArr = dto.getWork_starttime().split(":"); // 수정본
-//        int startTime = Integer.parseInt(startArr[0]) * 60 
-//                      + Integer.parseInt(startArr[1]);
-//
-//        String[] endArr = dto.getWork_endtime().split(":");
-//        int endTime = Integer.parseInt(endArr[0]) * 60 
-//                    + Integer.parseInt(endArr[1]);
+        String[] startArr = dto.getWork_starttime().split(":"); // 수정본
+        int startTime = Integer.parseInt(startArr[0]) * 60 
+                      + Integer.parseInt(startArr[1]);
+
+        String[] endArr = dto.getWork_endtime().split(":");
+        int endTime = Integer.parseInt(endArr[0]) * 60 
+                    + Integer.parseInt(endArr[1]);
 
         
         // 종료 시간이 0(자정)이라면 1440으로 변경해서 DB 정합성 유지
@@ -234,15 +234,15 @@ public class JobPostDAO {
     }
     
 
-	public int mypostRecordTotalCount(String memberId) {
-		String sql = "select count(*) from job_post where member_id = ?";
-		return jdbc.queryForObject(sql,Integer.class, memberId);
+	public int mypostRecordTotalCount(String memberId, String status) {
+		String sql = "select count(*) from job_post where member_id = ? and status = ?";
+		return jdbc.queryForObject(sql,Integer.class, memberId, status);
 	}
     
-    public List<JobPostDTO> selectById(String memberId, int start, int end){
+    public List<JobPostDTO> selectById(String memberId, String status, int start, int end){
     	String sql = "select * from (select row_number() over(order by seq desc) as rn, jp.* from job_post jp "
-    			+ "where member_id = ?) where rn between ? and ?";
-    	return jdbc.query(sql, jobPostMapper, memberId, start, end);
+    			+ "where member_id = ? and status = ?) where rn between ? and ?";
+    	return jdbc.query(sql, jobPostMapper, memberId, status, start, end);
     }
     
     
@@ -283,6 +283,14 @@ public class JobPostDAO {
     			dto.getContent(), dto.getBenefit(), dto.getSeq());
     }
     
+    
+    public int closeJobPost(int seq) {
+        String sql = "update job_post set status = ? where seq = ?";
+        int result = jdbc.update(sql, "마감", seq);
+        System.out.println("closeJobPost result : " + result);
+        System.out.println("closeJobPost seq : " + seq);
+        return result;
+    }
     
 
 }
