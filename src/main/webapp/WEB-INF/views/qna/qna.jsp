@@ -202,6 +202,7 @@
             align-items: center;
             font-weight: 500;
             font-size: 15px;
+            word-break: break-all;
         }
 
         .faq-question:hover {
@@ -217,6 +218,7 @@
             font-size: 14px;
             color: #666;
             line-height: 1.8;
+            word-break: break-all;
         }
 
         .faq-item.active .faq-answer {
