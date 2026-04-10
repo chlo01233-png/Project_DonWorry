@@ -464,8 +464,8 @@
     <c:choose>
         <c:when test="${nickName==null}">
             <div class="top-auth">
-                <span style="font-size: 13px; color: #666; cursor: pointer;">
-                    <a href="/members/toLogin" style="text-decoration: none; color:black">
+                <span style="font-size: 13px; color: #666; cursor: pointer; margin-right:10px;">
+                    <a href="/members/toLogin" style="text-decoration: none; color:black ">
                         <i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>로그인
                     </a>
                 </span>
@@ -606,10 +606,12 @@
 
 
             </div>
+            <c:if test="${nickName != null }">
             <button class="floating-write-btn">
                 <span class="material-symbols-outlined">edit</span>
                 <span>글쓰기</span>
             </button>
+            </c:if>
             </section>
     </div>
     

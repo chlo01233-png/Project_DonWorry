@@ -114,7 +114,6 @@ body {
 
 .nav-menu a.active {
 	color: #2563eb;
-	font-weight: 600;
 }
 
 .my-page {
@@ -598,42 +597,36 @@ img{
 <body>
 	<div class="community-container">
 		<c:choose>
-			<c:when test="${nickName==null}">
-				<div class="top-auth">
-					<span style="font-size: 13px; color: #666; cursor: pointer;">
-						<a href="/members/toLogin"
-						style="text-decoration: none; color: black"> <i
-							class="fa-regular fa-user fa-lg"
-							style="color: rgb(203, 203, 203); margin-right: 5px;"></i>로그인
-					</a>
-					</span>
-					<!-- 일단 관리자 빼고 다 숨겨둠 -->
-					<a href="/admin/admin_main" style="text-decoration: none;"><div
-							class="now-admin">관리자</div></a>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="top-auth">
-					<span style="font-size: 13px; color: #666; cursor: pointer;">
-						<i class="fa-regular fa-user fa-lg"
-						style="color: rgb(203, 203, 203); margin-right: 5px;"></i>
-						${nickName}님 환영합니다. <a href="/members/logout"
-						style="text-decoration: none; color: black">
-							<button class="logout-btn" style="margin-left: 10px;">로그아웃</button>
-					</a>
-					</span>
-					<c:if test="${type=='관리자'}">
-						<div class="now-admin">관리자</div>
-					</c:if>
-					<c:if test="${type=='사업자'}">
-						<div class="now-business">사업자</div>
-					</c:if>
-					<c:if test="${type=='개인'}">
-						<div class="now-personal">개인</div>
-					</c:if>
-				</div>
-			</c:otherwise>
-		</c:choose>
+<c:when test="${nickName==null}">
+    <div class="top-auth">
+        <span style="font-size: 13px; color: #666; cursor: pointer;">
+            <a href="/members/toLogin" style="text-decoration: none; color:black; margin-right:10px;">
+                <i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>로그인
+            </a>
+        </span>
+    </div>
+</c:when>
+<c:otherwise>
+    <div class="top-auth">  
+        <span style="font-size: 13px; color: #666; cursor: pointer;">
+        	<i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>
+            	${nickName}님 환영합니다.
+            <a href="members/logout" style="text-decoration: none; color:black">
+            <button class="logout-btn" style="margin-left:10px;">로그아웃</button>              
+            </a>
+        </span>
+		<c:if test="${type=='관리자'}">
+            <a href="/admin/admin_main" style="text-decoration:none;"><div class="now-admin">관리자</div></a>
+		</c:if>
+		<c:if test="${type=='사업자'}">
+            <div class="now-business">사업자</div>
+        </c:if>
+		<c:if test="${type=='개인'}">        
+            <div class="now-personal">개인</div>
+		</c:if>
+    </div>
+</c:otherwise>
+</c:choose>
 
 		<nav class="navbar">
 			<div style="display: flex; align-items: center; gap: 40px;">
@@ -657,7 +650,7 @@ img{
 				</div>
 			</div>
 			<c:if test="${nickName==null }">
-				<a class="my-page" href="members/toLogin"> <i
+				<a class="my-page" href="/members/toLogin"> <i
 					class="fa-solid fa-user-gear fa-lg"
 					style="color: rgb(197, 197, 197);"></i> 마이페이지
 				</a>
@@ -793,7 +786,7 @@ img{
 								<c:if test="${displayHour == 0}">
 									<c:set var="displayHour" value="12" />
 								</c:if>
-								<option value="${h * 60}">${ampm}${displayHour}:00</option>
+								<option value="${h * 60}">${ampm} ${displayHour}:00</option>
 								<option value="${h * 60 + 30}">${ampm}
 									${displayHour}:30</option>
 							</c:forEach>
@@ -815,7 +808,7 @@ img{
 								<c:if test="${displayHour == 0}">
 									<c:set var="displayHour" value="12" />
 								</c:if>
-								<option value="${h * 60}">${ampm}${displayHour}:00</option>
+								<option value="${h * 60}">${ampm} ${displayHour}:00</option>
 								<option value="${h * 60 + 30}">${ampm}
 									${displayHour}:30</option>
 							</c:forEach>
