@@ -318,6 +318,7 @@
             display: flex;
             justify-content: space-between; /* 왼쪽 텍스트와 오른쪽 시급을 양끝으로 */
             align-items: flex-end;         /* 아래쪽 기준으로 정렬 */
+            
         }
 
         /* 게시물 왼쪽 정보 (이름, 역할 등) */
@@ -333,6 +334,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            width: 100%;             /* 부모 너비를 꽉 채우도록 설정 */
+    overflow: hidden;        /* 자식 요소의 말줄임이 작동하도록 설정 */
         }
 
         .item-name {
@@ -354,6 +357,15 @@
         .contents-title {
             font-size: 17px;
             color: #252525;
+            
+            /* 제목이 길어질 때 UI 깨짐 방지 설정 */
+    display: inline-block;    /* block 성질을 주어야 너비 제한이 작동함 */
+    max-width: 70%;           /* 태그(자유게시판 등)와 겹치지 않게 적절히 제한 */
+    white-space: nowrap;      /* 줄바꿈 금지 */
+    overflow: hidden;         /* 넘치는 부분 숨김 */
+    text-overflow: ellipsis;  /* 말줄임표(...) 표시 */
+    vertical-align: middle;   /* 옆의 태그와 높이 맞춤 */
+            
         }
         .writer{
             font-size: 14px;
