@@ -606,10 +606,12 @@
 
 
             </div>
+            <c:if test="${nickName != null }">
             <button class="floating-write-btn">
                 <span class="material-symbols-outlined">edit</span>
                 <span>글쓰기</span>
             </button>
+            </c:if>
             </section>
     </div>
     

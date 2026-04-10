@@ -371,7 +371,7 @@
             <c:when test="${nickName==null}">
                 <div class="top-auth">
                     <span style="font-size: 13px; color: #666; cursor: pointer;">
-            <a href="members/toLogin" style="text-decoration: none; color:black; margin-right:10px;">
+            <a href="/members/toLogin" style="text-decoration: none; color:black; margin-right:10px;">
                 <i class="fa-regular fa-user fa-lg" style="color: rgb(203, 203, 203); margin-right:5px;"></i>로그인
             </a>
         </span>
@@ -417,7 +417,7 @@
                             style="color: rgb(36, 99, 235); margin-right:5px;"></i> 고객지원</a>
                 </div>
             </div>
-            <a class="my-page" href="${nickName==null ? 'members/toLogin' : '/mypage/toMypage'}">
+            <a class="my-page" href="${nickName==null ? '/members/toLogin' : '/mypage/toMypage'}">
                 <i class="fa-solid fa-user-gear fa-lg" style="color: rgb(197, 197, 197);"></i> 마이페이지
             </a>
         </nav>
