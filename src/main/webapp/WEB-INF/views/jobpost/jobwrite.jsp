@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+    // 브라우저 캐시를 방지하여 '뒤로 가기' 시 서버를 다시 호출하게 함
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+%>
 
 <!DOCTYPE html>
 <html>
@@ -303,40 +309,23 @@ textarea {
 
 /* 에디터 가로 너비를 아래 입력창들과 맞춤 */
 #editor {
-    max-width: 680px; /* 아래 textarea 너비에 맞춰서 조정해봐 */
-    width: 100%;
-    margin-bottom: 10px;
-    background-color: white;
+	max-width: 680px; /* 아래 textarea 너비에 맞춰서 조정해봐 */
+	width: 100%;
+	margin-bottom: 10px;
+	background-color: white;
 }
 
 /* 라벨이랑 에디터가 가로로 나란히 있게 하려면 부모 class에 적용 */
 .form-row-editor {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    gap: 20px;
+	display: flex;
+	align-items: flex-start;
+	margin-bottom: 20px;
+	gap: 20px;
 }
-
-/* 본문 */
-        .detail-content {
-            margin-top: 30px;
-            font-size: 17px;
-            /* 기존 15 → 크게 */
-            line-height: 1.9;
-            /* 가독성 핵심 */
-            color: #333;
-            min-height: 300px;
-            word-break: break-all;
-        }
-        .detail-content img{
-        max-width: 100%;    /* 부모 너비를 넘지 않음 */
-    height: auto;       /* 비율 유지 */
-    display: block;     /* 하단 여백 제거 */
-    margin: 10px 0;    /* 이미지 위아래 여백 */
-        }
 </style>
 </head>
 <body>
+
 	<div class="community-container">
 		<c:choose>
 			<c:when test="${nickName==null}">
@@ -448,7 +437,8 @@ textarea {
 					</div>
 				</div>
 
-				<div class="form-input-group" style="display: flex; gap: 10px;">
+				<div class="form-input-group"
+					style="display: flex; gap: 10px; margin-top: 15px; margin-bottom: 15px;">
 					<select id="mainCategory" name="main_category" required
 						style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
 						<option value="">대분류 선택</option>
@@ -513,59 +503,53 @@ textarea {
 				</div>
 
 				<div class="form-row">
-    <div class="form-label">
-        근무일/시간<span>*</span>
-    </div>
-    <div class="form-input-group" style="display: flex; gap: 10px;">
-        <select name="work_days" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-            <option value="평일">평일</option>
-            <option value="주말">주말</option>
-            <option value="요일협의">요일협의</option>
-        </select>
+					<div class="form-label">
+						근무일/시간<span>*</span>
+					</div>
+					<div class="form-input-group" style="display: flex; gap: 10px;">
+						<select name="work_days"
+							style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+							<option value="평일">평일</option>
+							<option value="주말">주말</option>
+							<option value="요일협의">요일협의</option>
+						</select> <select name="work_starttime"
+							style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+							<c:forEach var="h" begin="0" end="23">
+								<c:set var="hourStr" value="${h < 10 ? '0' : ''}${h}" />
+								<c:set var="ampm" value="${h < 12 ? '오전' : '오후'}" />
+								<c:set var="displayHour" value="${h <= 12 ? h : h - 12}" />
+								<c:if test="${displayHour == 0}">
+									<c:set var="displayHour" value="12" />
+								</c:if>
 
-       <select name="work_starttime" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-    <c:forEach var="h" begin="0" end="23">
-        <c:set var="hourStr" value="${h < 10 ? '0' : ''}${h}" />
-        <c:set var="ampm" value="${h < 12 ? '오전' : '오후'}" />
-        <c:set var="displayHour" value="${h <= 12 ? h : h - 12}" />
-        <c:if test="${displayHour == 0}">
-            <c:set var="displayHour" value="12"/>
-        </c:if>
+								<option value="${hourStr}:00"
+									<c:if test="${post.work_starttime == hourStr.concat(':00')}">selected</c:if>>
+									${ampm} ${displayHour}:00</option>
+								<option value="${hourStr}:30"
+									<c:if test="${post.work_starttime == hourStr.concat(':30')}">selected</c:if>>
+									${ampm} ${displayHour}:30</option>
+							</c:forEach>
+						</select> <span style="align-self: center;">~</span> <select
+							name="work_endtime"
+							style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+							<c:forEach var="h" begin="0" end="23">
+								<c:set var="hourStr" value="${h < 10 ? '0' : ''}${h}" />
+								<c:set var="ampm" value="${h < 12 ? '오전' : '오후'}" />
+								<c:set var="displayHour" value="${h <= 12 ? h : h - 12}" />
+								<c:if test="${displayHour == 0}">
+									<c:set var="displayHour" value="12" />
+								</c:if>
 
-        <option value="${hourStr}:00"
-            <c:if test="${post.work_starttime == hourStr.concat(':00')}">selected</c:if>>
-            ${ampm} ${displayHour}:00
-        </option>
-        <option value="${hourStr}:30"
-            <c:if test="${post.work_starttime == hourStr.concat(':30')}">selected</c:if>>
-            ${ampm} ${displayHour}:30
-        </option>
-    </c:forEach>
-</select>
-
-<span style="align-self: center;">~</span>
-
-<select name="work_endtime" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-    <c:forEach var="h" begin="0" end="23">
-        <c:set var="hourStr" value="${h < 10 ? '0' : ''}${h}" />
-        <c:set var="ampm" value="${h < 12 ? '오전' : '오후'}" />
-        <c:set var="displayHour" value="${h <= 12 ? h : h - 12}" />
-        <c:if test="${displayHour == 0}">
-            <c:set var="displayHour" value="12"/>
-        </c:if>
-
-        <option value="${hourStr}:00"
-            <c:if test="${post.work_endtime == hourStr.concat(':00')}">selected</c:if>>
-            ${ampm} ${displayHour}:00
-        </option>
-        <option value="${hourStr}:30"
-            <c:if test="${post.work_endtime == hourStr.concat(':30')}">selected</c:if>>
-            ${ampm} ${displayHour}:30
-        </option>
-    </c:forEach>
-</select>
-    </div>
-</div>
+								<option value="${hourStr}:00"
+									<c:if test="${post.work_endtime == hourStr.concat(':00')}">selected</c:if>>
+									${ampm} ${displayHour}:00</option>
+								<option value="${hourStr}:30"
+									<c:if test="${post.work_endtime == hourStr.concat(':30')}">selected</c:if>>
+									${ampm} ${displayHour}:30</option>
+							</c:forEach>
+						</select>
+					</div>
+				</div>
 
 
 				<div class="form-row" style="align-items: flex-start;">
@@ -588,7 +572,7 @@ textarea {
 					</div>
 					<div class="form-input-group">
 						<textarea name="benefit" placeholder="제공되는 복지 혜택이나 우대사항을 입력해주세요"></textarea>
-						<div class="char-count">0 / 1000</div>
+<!-- 						<div class="char-count">0 / 1000</div> -->
 					</div>
 				</div>
 
@@ -717,7 +701,15 @@ textarea {
                 }
             });
         });
+        
+//         const loginUser = "${nickName}";
+//         if (!loginUser || loginUser === "") {
+//             alert("로그인이 필요한 서비스입니다.");
+//             location.replace("/members/toLogin"); // 기록을 남기지 않고 이동
+//         }
     });
+    
+
     
 
 </script>
