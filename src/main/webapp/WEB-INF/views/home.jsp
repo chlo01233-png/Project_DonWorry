@@ -663,7 +663,8 @@
                 <div class="item-loc">${i.sido}/${i.gugun}</div>
                 <div class="item-days">${i.work_days}</div>
                 <div class="job-pay">
-                    <span class="job-pay-label">시급</span>${i.pay}원
+                    <span class="job-pay-label">시급</span>
+                    <fmt:formatNumber value="${i.pay}" pattern="#,###" />원
                 </div>
             </a>
         </div>
