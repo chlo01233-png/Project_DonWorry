@@ -17,7 +17,7 @@ public class WorkPlaceDAO {
 	public JdbcTemplate jdbc;
 	
 	public int countRow(String id) {
-		String sql = "select count(*) from workplace where id = ?";
+		String sql = "select count(*) from (select * from workplace where status = 'Y') where id = ?";
 		return jdbc.queryForObject(sql, int.class, id);
 	}
 	
@@ -76,7 +76,7 @@ public class WorkPlaceDAO {
 	}
 	
 	public int deleteBySeq(int seq) {
-		String sql = "delete from workplace where seq = ?";
+		String sql = "update workplace set status = 'N' where seq = ?";
 		return jdbc.update(sql,seq);
 	}
 	
