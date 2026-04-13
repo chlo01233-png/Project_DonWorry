@@ -538,6 +538,8 @@ body {
 
                 </tbody>
             </table>
+            <div class="pagination-wrap" id="admin_reply_report_navi">
+            </div>
         </section>
     </main>
 </div>
@@ -669,6 +671,54 @@ body {
 	
  
 //====================신고댓글=======================//
+	let rTotalCount = ${rTotalCount}; //신고글 총 개수
+	let rCurrentPage = ${rCurrentPage}; // 신고 현재 페이지
+	let rRecordCountPerPage = 5; // 한 페이지당 5개
+	let rNaviCountPerPage = 10; 
+	let rPageTotalCount = Math.ceil(rTotalCount / rRecordCountPerPage);
+	
+	let rStartNavi = Math.floor((rCurrentPage - 1) / rNaviCountPerPage) * rNaviCountPerPage + 1;
+	let rEndNavi = rStartNavi + rNaviCountPerPage - 1;
+	
+	if (rEndNavi > rPageTotalCount) { 
+		rEndNavi = rPageTotalCount; 
+	}
+	
+	let rNeedPrev = true;
+	let rNeedNext = true;
+	
+	if(rStartNavi == 1){
+		rNeedPrev = false;
+	}
+	if(rEndNavi == rPageTotalCount){
+		rNeedNext = false;
+	}
+	
+	/*게시물 관리 id = admin_board_navi*/
+	let report_navi = $("#admin_reply_report_navi");
+	
+	//이전 버튼 <
+	if(rNeedPrev){	
+		let btn = $("<button>").addClass("page-btn").html("&lt;");
+		btn.attr("onclick","location.href='"+getReportPageUrl(rStartNavi - 1) + "'");
+		report_navi.append(btn);
+	}	
+	// 페이지 번호
+	for (let i = rStartNavi; i <= rEndNavi; i++) {
+	    let btn = $("<button>").addClass("page-btn").html(i);
+	    btn.attr("onclick", "location.href='" + getReportPageUrl(i) + "'");
+	    if (i == rCurrentPage) {
+	        btn.addClass("active");
+	    }
+	    report_navi.append(btn);
+	}
+	
+	//다음 버튼 >
+	if(rNeedNext){		 
+		let btn = $("<button>").addClass("page-btn").html("&gt;");//구글 라이브러리 > 모양
+		btn.attr("onclick","location.href='"+getReportPageUrl(rEndNavi + 1) + "'");
+		report_navi.append(btn);
+	}
 	
 	//삭제 버튼 클릭
 	$(".rp_reply-del-btn").on("click",function(){
