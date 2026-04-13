@@ -703,7 +703,7 @@ body {
 
 		// 서브밋 정규식
 		$("#form").on("submit", function() {
-    // 0. 현재 선택된 가입 유형 가져오기 (수정됨)
+    // 0. 현재 선택된 가입 유형 가져오기
     let type = $('input[name="type"]:checked').val();
 
     // 1. 아이디 체크
