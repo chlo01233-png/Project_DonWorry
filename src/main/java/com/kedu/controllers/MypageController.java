@@ -92,6 +92,9 @@ public class MypageController {
 		int applyCount = jadao.countApplyById(id);
 		model.addAttribute("applyCount",applyCount);
 		
+		int jobPostCount = jpdao.jobPostCount(id);
+		model.addAttribute("jobPostCount",jobPostCount);
+		
 		return "mypage/mypage";
 	}
 	
@@ -109,6 +112,9 @@ public class MypageController {
 		String id =(String)session.getAttribute("loginId");	
 		String type = (String)session.getAttribute("type");
 		int up = mdao.updateMember(id.trim(),dto);
+		if(up>0) {
+			session.setAttribute("nickName",dto.getNickname());
+		}
 		return "redirect:/mypage/toProfile";
 	}
 	
