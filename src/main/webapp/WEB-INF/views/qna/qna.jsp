@@ -572,6 +572,9 @@
                 $('html, body').animate({
                     scrollTop: $target.offset().top - 100 // 상단바 여백 고려
                 }, 500);
+             // [추가] 주소창에서 해시(#faq-18) 제거
+                // 뒤로가기 기록을 남기지 않고 현재 주소의 해시만 깔끔하게 지웁니다.
+                history.replaceState(null, null, window.location.pathname + window.location.search);
             }
         }
     });
