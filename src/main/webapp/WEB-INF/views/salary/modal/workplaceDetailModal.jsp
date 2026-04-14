@@ -34,7 +34,6 @@
 							id="detail_workplace_pay_type" name="pay_type">
 							<option value="시급">시급</option>
 							<option value="일급">일급</option>
-							<option value="월급">월급</option>
 						</select>
 					</div>
 				</div>
