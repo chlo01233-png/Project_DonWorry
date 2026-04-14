@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>돈워리- 구직 활동 관리</title>
+<title>돈워리 - 구직 활동 관리</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    
@@ -270,12 +270,7 @@
             <h5>나의 지원 현황</h5>
             <p>지원한 공고의 진행 상태를 한눈에 확인하세요</p>
         </div>
-        <a href="/mypage/resume" style="text-decoration:none;">
-		<button class="resume-btn">
-               <i class="fa-regular fa-clipboard fa-lg" style="color: rgb(98, 98, 98); margin-right:5px;"></i>
-               <span>이력서 등록</span>
-        </button>
-        </a>
+
 
         <section class="post-list">
             <div style="font-size: 14px; color: #868e96; margin-bottom: 15px; font-weight: 600; padding-left: 5px;">전체 지원 내역 (${selectApplyList.size()})</div>
