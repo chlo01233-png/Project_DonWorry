@@ -255,6 +255,7 @@ body {
 	padding: 8px 14px !important;
 	font-size: 13px !important;
 	font-weight: 600 !important;
+	cursor: pointer;
 }
 
 .fc .fc-button:hover {
@@ -291,6 +292,7 @@ body {
 	color: #374151;
 	padding: 4px 6px;
 	font-weight: 500;
+	cursor: pointer;
 }
 
 .fc .fc-day-today {
@@ -304,6 +306,7 @@ body {
 	padding: 4px 7px !important;
 	font-size: 12px !important;
 	font-weight: 600;
+	cursor: pointer;
 }
 
 .salary-box {
@@ -2185,6 +2188,8 @@ body {
 		    let value = this.value.replace(/[^0-9]/g, "");// 숫자만 남기기
 		    this.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");// 콤마 찍기
 		});
+		
+		
 		
 
 		
