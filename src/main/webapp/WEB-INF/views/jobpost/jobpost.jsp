@@ -665,7 +665,7 @@ img {
 					<a href="/jobposts/jobpost" class="active"> <i
 						class="fa-solid fa-briefcase fa-lg"
 						style="color: rgb(36, 99, 235); margin-right: 5px;"></i> 구인구직
-					</a> <a href="boards/mainboard_list?page=1"> <i
+					</a> <a href="/boards/mainboard_list?page=1"> <i
 						class="fa-regular fa-message fa-lg"
 						style="color: rgb(203, 203, 203); margin-right: 5px;"></i> 커뮤니티
 					</a> <a href="/qna/qna?page=1"> <i
@@ -784,7 +784,7 @@ img {
 				</div>
 
 				<div class="layer-content"
-					style="display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 25px 20px !important; gap: 10px !important;">
+					style="display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 25px 20px !important; gap: 10px !important; minheight: 25px;">
 
 					<div class="select-box-wrap"
 						style="flex: 1.2; display: flex; flex-direction: column; gap: 8px;">

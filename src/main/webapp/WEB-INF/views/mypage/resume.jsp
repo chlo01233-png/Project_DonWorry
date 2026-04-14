@@ -352,7 +352,7 @@
                 <div class="form-group">
                     <label class="form-label">경력 사항</label>
                     <input type="text" name="career_write" class="form-input count-input" id="career_input" disabled 
-                    placeholder="예: 스타벅스 강남점 6개월 근무 (경력이 없다면 '신입' 기재)" maxlength="100">
+                    placeholder="예: 스타벅스 강남점 6개월 근무" maxlength="100">
                     <div class="char_count" style="font-size: 12px; color: #999; text-align: right;">
                      	0 / 100
                      </div>
@@ -481,6 +481,10 @@
     /*글자 수 제한*/
     function updateCount(input){
     	const maxLength = input.getAttribute('maxlength');//max값 가자ㅕ옴
+    	// [핵심 고칠 부분] 입력된 값이 maxLength를 넘으면 강제로 잘라버립니다.
+        if (input.value.length > maxLength) {
+            input.value = input.value.substring(0, maxLength);
+        }
        	const currentLength = input.value.length;
        	//현재 입력창과 가까운 c- 찾음
        	const display = input.parentElement.querySelector('.char_count');
