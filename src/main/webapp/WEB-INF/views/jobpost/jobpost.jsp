@@ -814,7 +814,7 @@ img {
 								<c:if test="${displayHour == 0}">
 									<c:set var="displayHour" value="12" />
 								</c:if>
-								<option value="${h * 60}">${ampm}${displayHour}:00</option>
+								<option value="${h * 60}">${ampm} ${displayHour}:00</option>
 								<option value="${h * 60 + 30}">${ampm}
 									${displayHour}:30</option>
 							</c:forEach>
@@ -836,7 +836,7 @@ img {
 								<c:if test="${displayHour == 0}">
 									<c:set var="displayHour" value="12" />
 								</c:if>
-								<option value="${h * 60}">${ampm}${displayHour}:00</option>
+								<option value="${h * 60}">${ampm} ${displayHour}:00</option>
 								<option value="${h * 60 + 30}">${ampm}
 									${displayHour}:30</option>
 							</c:forEach>
