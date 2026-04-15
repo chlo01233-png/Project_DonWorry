@@ -196,6 +196,7 @@ public class BoardsDAO {
 	            + "    FROM boards b "
 	            + "    LEFT JOIN members m ON b.member_id = m.id "
 	            + "    LEFT JOIN reply r ON b.seq = r.parent_seq "
+	            + "	   WHERE b.member_id != 'admin'				 "	
 	            + "    GROUP BY "
 	            + "        b.seq, m.nickname, b.category, b.title, "
 	            //+ "        b.content, "
