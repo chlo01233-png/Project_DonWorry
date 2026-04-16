@@ -1040,7 +1040,7 @@ body {
 	        const tax = calculateTax(grossPay, taxRate);
 	        const insurance = calculateInsurance(grossPay, insuranceApplied, employmentInsurance);
 
-	        const finalPay = grossPay - tax - insurance;
+	        const finalPay = grossPay
 	        totalEl.value = finalPay > 0 ? finalPay : 0;
 	    }
 
@@ -1562,7 +1562,7 @@ body {
 	            card += '<div class="card" data-seq="' + i.seq + '">';
 	            card += '    <div class="card-title">' + (i.name || "") + '</div>';
 	            card += '    <div class="info-item">';
-	            card += '        <span class="info-label">예상 급여</span>';
+	            card += '        <span class="info-label">예상 급여(세전)</span>';
 	            card += '        <span class="info-val blue">' + totalPay + '</span>';
 	            card += '    </div>';
 	            card += '    <div class="info-item">';
