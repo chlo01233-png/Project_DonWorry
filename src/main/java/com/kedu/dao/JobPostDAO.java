@@ -206,12 +206,7 @@ public class JobPostDAO {
         if(endTime == 0) {
             endTime = 1440;
         }
-        System.out.println(dto.getMember_id() + dto.getCompany_name() + dto.getPhone() +
-            dto.getSido() + dto.getGugun() + dto.getDong() + dto.getAddress_detail() + dto.getAddress() +
-            dto.getCount() +  dto.getTitle() + dto.getPay() + dto.getWork_days() + 
-            startTime + endTime + 
-            dto.getMain_category() + dto.getSub_category() +
-            dto.getContent() + dto.getBenefit());
+       
 
         return jdbc.update(sql,
             dto.getMember_id(), dto.getCompany_name(), dto.getPhone(), 
