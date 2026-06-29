@@ -151,59 +151,7 @@ src
     └── jsp
 ```
 
----
-
-## 주요 구현 내용
-
-- Spring MVC 기반 웹 서비스 구현
-- Oracle DB 연동
-- JDBC / JdbcTemplate 활용
-- FullCalendar를 이용한 근무 일정 관리
-- Toast UI Editor 적용
-- 이메일 인증 기능
-- 관리자 권한 분리
-- Git Branch 기반 협업
 
 ---
 
-## Trouble Shooting
 
-### Base64 이미지 저장 문제
-
-Toast UI Editor에서 이미지를 Base64로 저장하면서 DB 용량 증가와 페이지 로딩 속도 저하 문제가 발생했습니다.
-
-→ Editor Hook을 이용하여 이미지를 서버에 업로드한 후 URL만 저장하도록 변경하여 성능을 개선했습니다.
-
----
-
-### CLOB GROUP BY 오류
-
-Oracle에서 CLOB 컬럼을 GROUP BY 하면서 ORA-00932 오류가 발생했습니다.
-
-→ TO_CHAR()를 이용하여 문자열로 변환 후 처리하도록 수정했습니다.
-
----
-
-### FullCalendar 상세조회 오류
-
-JavaScript 변수 참조 오류(value is not defined)로 상세조회가 실패했습니다.
-
-→ 파라미터와 변수명을 정리하고 null 체크를 추가하여 해결했습니다.
-
----
-
-### 캐시 보안 문제
-
-로그아웃 후 브라우저 뒤로가기로 이전 페이지 접근이 가능했습니다.
-
-→ Cache-Control 헤더와 세션 검증을 적용하여 해결했습니다.
-
----
-
-## 프로젝트를 통해 배운 점
-
-- Spring MVC 기반 웹 애플리케이션 개발 경험
-- Oracle DB와 JDBC를 활용한 데이터 처리
-- FullCalendar와 Toast UI Editor 등 외부 라이브러리 활용
-- Git Branch 전략을 이용한 협업 경험
-- 실제 서비스 수준의 화면 구성과 데이터 흐름 설계 경험
